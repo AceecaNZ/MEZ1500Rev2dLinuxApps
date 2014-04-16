@@ -1,0 +1,16 @@
+#!/bin/sh
+
+HOST=192.168.1.123
+USER=root
+PASS=mzdev
+
+echo "Uploading app to device..."
+
+lftp -u ${USER},${PASS} sftp://${HOST} <<EOF
+cd opt
+put adc_test
+bye
+EOF
+
+echo "done"
+
