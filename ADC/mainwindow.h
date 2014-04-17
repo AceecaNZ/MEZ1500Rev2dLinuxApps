@@ -35,6 +35,7 @@ private:
     int count;
     int fd_mzio;
     int fd_spi;
+    int fd_ltc185x;
 };
 
 #endif // MAINWINDOW_H

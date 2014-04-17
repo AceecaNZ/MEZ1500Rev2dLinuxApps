@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "/opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/drivers/char/MEZ1500_mzio.h"
+#include "/opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/drivers/char/MEZ1500_mzio_ltc185x.h"
 #include "/opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/include/linux/spi/spidev.h"
 #include <sys/time.h>
 #include "adc1.h"
@@ -67,24 +68,30 @@ MainWindow::MainWindow(QWidget *parent) :
     fd_spi  = 0;
 
     // Unload the MZIO driver
-    system("rmmod MEZ1500_mzio");
+//    system("rmmod MEZ1500_mzio");
 
     // Load the MZIO driver
-    system("insmod /lib/modules/2.6.32.2-MEZ1500/kernel/drivers/char/MEZ1500_mzio.ko");
-    system("modprobe MEZ1500_mzio");
+//   system("insmod /lib/modules/2.6.32.2-MEZ1500/kernel/drivers/char/MEZ1500_mzio.ko");
+//   system("modprobe MEZ1500_mzio");
 
 
-    fd_mzio = open("/dev/mzio", O_RDWR);
+//    fd_mzio = open("/dev/mzio", O_RDWR);
+ //   if (fd_mzio < 0)
+ //       printf("Failed to open MZIO module/n");
+  //  else
+  //      printf("Openned MZIO module/n");
+
+//    fd_spi  = open("/dev/spidev0.0",  O_RDWR);
+ //   if (fd_spi < 0)
+  //      printf("Failed to open SPI module/n");
+   // else
+     //   printf("Openned SPI module/n");
+
+    fd_ltc185x = open("/dev/ltc185x", O_RDWR);
     if (fd_mzio < 0)
-        printf("Failed to open MZIO module");
+        printf("Failed to open MZIO LTC185x module/n");
     else
-        printf("Openned MZIO module");
-
-    fd_spi  = open("/dev/spidev0.0",  O_RDWR);
-    if (fd_spi < 0)
-        printf("Failed to open SPI module");
-    else
-        printf("Openned SPI module");
+        printf("Openned MZIO LTC185x module/n");
 
 exit:
     fflush(stdout);
@@ -164,8 +171,9 @@ void MainWindow::on_initadc_clicked()
     printf("Init ADC\n");
     fflush(stdout);
 
-    if (fd_mzio > 0)
+    if (fd_ltc185x > 0)
     {
+/*
         ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   CRNT_CN1_EN_N_CAM_DATA0);
         ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   CRNT_CN2_EN_N_CAM_DATA1);
         ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   CRNT_CN3_EN_N_CAM_DATA2);
@@ -202,6 +210,9 @@ void MainWindow::on_initadc_clicked()
         ioctl(fd_mzio, MZIO_GPIO_SET_PU_OFF,  ADC_CNV_START_CAM_DATA6);
 
         ioctl(fd_mzio, MZIO_GPIO_SET_PU_OFF,  ADC_CNV_BSY_N_CAM_DATA7);
+*/
+        ioctl(fd_ltc185x, MZIO_LTC1857_INIT,  0);
+
     }
 }
 
