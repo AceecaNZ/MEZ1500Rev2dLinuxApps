@@ -3,57 +3,20 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/ioctl.h>
+#include <QTimer>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "/opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/drivers/char/MEZ1500_mzio.h"
 #include "/opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/drivers/char/MEZ1500_mzio_ltc185x.h"
-#include "/opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/include/linux/spi/spidev.h"
 #include <sys/time.h>
 #include "adc1.h"
+#include "keyboard/keyboard.h"
 
-#define CRNT_CN1_EN_N_CAM_DATA0     MZIO_CAMIF_DAT0
-#define CRNT_CN2_EN_N_CAM_DATA1     MZIO_CAMIF_DAT1
-#define CRNT_CN3_EN_N_CAM_DATA2     MZIO_CAMIF_DAT2
-#define CLIM_EN_N_CAM_DATA3         MZIO_CAMIF_DAT3
-#define CLIM_FLT_N_CAM_DATA4        MZIO_CAMIF_DAT4
-#define ADC_RD_EN_N_CAM_DATA5       MZIO_CAMIF_DAT5
-#define ADC_CNV_START_CAM_DATA6     MZIO_CAMIF_DAT6
-#define ADC_CNV_BSY_N_CAM_DATA7     MZIO_CAMIF_DAT7
-
-unsigned char   spi_mode = SPI_MODE_0;
-unsigned char   spi_bitsPerWord = 8;
-unsigned int    spi_speed = 500000;
+#define RESET_STATUS_TIMER  status_erase_count=5
 
 // --------------------------------------------------------------------
 // Internal Functions
 // --------------------------------------------------------------------
-static int spiWriteRead(int fd, unsigned char *data, int length);
-static int spiWriteRead(int fd, unsigned char *data, int length)
-{
-    struct spi_ioc_transfer spi[length];
-    int i = 0;
-    int retVal = -1;
-
-    // One spi transfer for each byte
-    for (i = 0 ; i < length ; i++)
-    {
-        spi[i].tx_buf        = (unsigned long)(data + i); // transmit from "data"
-        spi[i].rx_buf        = (unsigned long)(data + i); // receive into "data"
-        spi[i].len           = sizeof(*(data + i));
-        spi[i].delay_usecs   = 0;
-        spi[i].speed_hz      = spi_speed;
-        spi[i].bits_per_word = spi_bitsPerWord;
-        spi[i].cs_change = 0;
-    }
-
-    retVal = ioctl (fd, SPI_IOC_MESSAGE(length), &spi);
-    if(retVal < 0){
-    printf("Problem transmitting spi data..ioctl\n");
-    fflush(stdout);
-    }
-
-    return retVal;
-}
 // --------------------------------------------------------------------
 
 
@@ -61,39 +24,53 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    int i;
+    system("rmmod MEZ1500_mzio_ltc185x");
+    system("modprobe MEZ1500_mzio_ltc185x");
+
     ui->setupUi(this);
 
+    lineEditkeyboard = new Keyboard();
+    connect(ui->ch0_samrate,SIGNAL(selectionChanged()),this,SLOT(run_keyboard_lineEdit()));
+
     count   = 0;
-    fd_mzio = 0;
-    fd_spi  = 0;
-
-    // Unload the MZIO driver
-//    system("rmmod MEZ1500_mzio");
-
-    // Load the MZIO driver
-//   system("insmod /lib/modules/2.6.32.2-MEZ1500/kernel/drivers/char/MEZ1500_mzio.ko");
-//   system("modprobe MEZ1500_mzio");
-
-
-//    fd_mzio = open("/dev/mzio", O_RDWR);
- //   if (fd_mzio < 0)
- //       printf("Failed to open MZIO module/n");
-  //  else
-  //      printf("Openned MZIO module/n");
-
-//    fd_spi  = open("/dev/spidev0.0",  O_RDWR);
- //   if (fd_spi < 0)
-  //      printf("Failed to open SPI module/n");
-   // else
-     //   printf("Openned SPI module/n");
-
+    fd_ltc185x = 0;
     fd_ltc185x = open("/dev/ltc185x", O_RDWR);
-    if (fd_mzio < 0)
-        printf("Failed to open MZIO LTC185x module/n");
+    if (fd_ltc185x < 0)
+        printf("Failed to open MZIO LTC185x module\n");
     else
-        printf("Openned MZIO LTC185x module/n");
+        printf("Openned MZIO LTC185x module\n");
 
-exit:
+    QTimer *timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(on_timer_event()));
+    timer->start(1000);
+
+    RESET_STATUS_TIMER;
+
+    // For now init all the sampling rate values to 1000us
+    for (i=0; i<12; i++)
+    {
+        samrate_vals[i] = 1000000;
+        samrate_vals[i] = 5;
+    }
+
+    strBuf.sprintf("%lu", samrate_vals[0]);
+    ui->ch0_samrate->setText(strBuf);
+    strBuf.sprintf("%lu", samrate_vals[1]);
+    ui->ch1_samrate->setText(strBuf);
+    strBuf.sprintf("%lu", samrate_vals[2]);
+    ui->ch2_samrate->setText(strBuf);
+    strBuf.sprintf("%lu", samrate_vals[3]);
+    ui->ch3_samrate->setText(strBuf);
+    strBuf.sprintf("%lu", samrate_vals[4]);
+    ui->ch4_samrate->setText(strBuf);
+    strBuf.sprintf("%lu", samrate_vals[5]);
+    ui->ch5_samrate->setText(strBuf);
+    strBuf.sprintf("%lu", samrate_vals[6]);
+    ui->ch6_samrate->setText(strBuf);
+    strBuf.sprintf("%lu", samrate_vals[7]);
+    ui->ch7_samrate->setText(strBuf);
+
     fflush(stdout);
 }
 
@@ -101,239 +78,385 @@ MainWindow::~MainWindow()
 {
     delete ui;
     // Unload the MZIO driver
-    system("rmmod MEZ1500_mzio");
+    system("rmmod MEZ1500_mzio_ltc185x");
 
-    ::close (fd_mzio);
-    ::close (fd_spi);
+    ::close (fd_ltc185x);
+}
+
+void MainWindow::run_keyboard_lineEdit()
+{
+    QLineEdit *line = (QLineEdit *)sender();
+    lineEditkeyboard->setLineEdit(line);
+    lineEditkeyboard->show();
 }
 
 
-
-
-void MainWindow::on_modpwron_clicked()
+void MainWindow::on_Start_clicked()
 {
-    unsigned int mzio_data;
-    ui->status->setText("MOD_PWR on");
-    if (fd_mzio>0)
+    unsigned long   control;
+    unsigned long   tempULong;
+    QString         tempStr;
+    int             err;
+
+    if (fd_ltc185x)
     {
-//        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_OUT, MZIO_MOD_PWR);
-//        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH, MZIO_MOD_PWR);
+        // Init the ADC
+        err = ioctl(fd_ltc185x, MZIO_LTC185x_INIT, 0);
+        if (err<0) printf("Can't init the ADC\n");
 
-        ioctl(fd_mzio, MZIO_CAMIF_SET_DAT, 	bGPDAT_CAM_init);
-        ioctl(fd_mzio, MZIO_CAMIF_SET_UP, 	bGPUP_CAM_init);
-        ioctl(fd_mzio, MZIO_CAMIF_SET_CFG, 	bGPCON_CAM_init);
-
-        ioctl(fd_mzio, MZIO_GPIO_SET_LOW,  	MZIO_5V_MZ_ENn);
-        mzio_data = ioctl(fd_mzio, MZIO_CAMIF_GET_DAT, 0);
-        mzio_data &= ~(bDAT_CRNT_CN3_EN_N_CAM_DATA2|bDAT_CLIM_EN_N_CAM_DATA3);
-        ioctl(fd_mzio, MZIO_CAMIF_SET_DAT, 	mzio_data);
-    }
-}
-
-void MainWindow::on_modpwroff_clicked()
-{
-    unsigned int mzio_data;
-    ui->status->setText("MOD_PWR off");
-    if (fd_mzio>0)
-    {
-//        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_OUT, MZIO_MOD_PWR);
- //       ioctl(fd_mzio, MZIO_GPIO_SET_LOW, MZIO_MOD_PWR);
-
-        ioctl(fd_mzio, MZIO_GPIO_SET_LOW,  	MZIO_5V_MZ_ENn);
-        mzio_data = ioctl(fd_mzio, MZIO_CAMIF_GET_DAT, 0);
-        mzio_data |= bDAT_CRNT_CN3_EN_N_CAM_DATA2;
-        ioctl(fd_mzio, MZIO_CAMIF_SET_DAT, 	mzio_data);
-    }
-}
-
-void MainWindow::on_modrston_clicked()
-{
-    ui->status->setText("MZIO_MOD_RESET on");
-    if (fd_mzio>0)
-    {
-        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_OUT, MZIO_MOD_RESET);
-        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH, MZIO_MOD_RESET);
-    }
-}
-
-void MainWindow::on_modrstoff_clicked()
-{
-    ui->status->setText("MZIO_MOD_RESET off");
-    if (fd_mzio>0)
-    {
-        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_OUT, MZIO_MOD_RESET);
-        ioctl(fd_mzio, MZIO_GPIO_SET_LOW, MZIO_MOD_RESET);
-    }
-}
-
-void MainWindow::on_initadc_clicked()
-{
-    printf("Init ADC\n");
-    fflush(stdout);
-
-    if (fd_ltc185x > 0)
-    {
-/*
-        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   CRNT_CN1_EN_N_CAM_DATA0);
-        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   CRNT_CN2_EN_N_CAM_DATA1);
-        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   CRNT_CN3_EN_N_CAM_DATA2);
-        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   CLIM_EN_N_CAM_DATA3);
-        ioctl(fd_mzio, MZIO_GPIO_SET_LOW,    CLIM_FLT_N_CAM_DATA4);
-        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   ADC_RD_EN_N_CAM_DATA5);
-        ioctl(fd_mzio, MZIO_GPIO_SET_LOW,    ADC_CNV_START_CAM_DATA6);
-        ioctl(fd_mzio, MZIO_GPIO_SET_LOW,    ADC_CNV_BSY_N_CAM_DATA7);
-
-        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_OUT, CRNT_CN1_EN_N_CAM_DATA0);
-        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_OUT, CRNT_CN2_EN_N_CAM_DATA1);
-        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_OUT, CRNT_CN3_EN_N_CAM_DATA2);
-        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_OUT, CLIM_EN_N_CAM_DATA3);
-        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_IN,  CLIM_FLT_N_CAM_DATA4);
-        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_OUT, ADC_RD_EN_N_CAM_DATA5);
-        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_OUT, ADC_CNV_START_CAM_DATA6);
-        ioctl(fd_mzio, MZIO_GPIO_SET_DIR_IN,  ADC_CNV_BSY_N_CAM_DATA7);
-
-        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   CRNT_CN1_EN_N_CAM_DATA0);
-        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   CRNT_CN2_EN_N_CAM_DATA1);
-        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   CRNT_CN3_EN_N_CAM_DATA2);
-        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   CLIM_EN_N_CAM_DATA3);
-        ioctl(fd_mzio, MZIO_GPIO_SET_LOW,    CLIM_FLT_N_CAM_DATA4);
-        ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,   ADC_RD_EN_N_CAM_DATA5);
-        ioctl(fd_mzio, MZIO_GPIO_SET_LOW,    ADC_CNV_START_CAM_DATA6);
-        ioctl(fd_mzio, MZIO_GPIO_SET_LOW,    ADC_CNV_BSY_N_CAM_DATA7);
-
-        ioctl(fd_mzio, MZIO_GPIO_SET_PU_OFF,  CRNT_CN1_EN_N_CAM_DATA0);
-        ioctl(fd_mzio, MZIO_GPIO_SET_PU_OFF,  CRNT_CN2_EN_N_CAM_DATA1);
-        ioctl(fd_mzio, MZIO_GPIO_SET_PU_OFF,  CRNT_CN3_EN_N_CAM_DATA2);
-        ioctl(fd_mzio, MZIO_GPIO_SET_PU_OFF,  CLIM_EN_N_CAM_DATA3);
-        ioctl(fd_mzio, MZIO_GPIO_SET_PU_OFF,  CLIM_FLT_N_CAM_DATA4);
-        ioctl(fd_mzio, MZIO_GPIO_SET_PU_OFF,  ADC_RD_EN_N_CAM_DATA5);
-        ioctl(fd_mzio, MZIO_GPIO_SET_PU_OFF,  ADC_CNV_START_CAM_DATA6);
-
-        ioctl(fd_mzio, MZIO_GPIO_SET_PU_OFF,  ADC_CNV_BSY_N_CAM_DATA7);
-*/
-        ioctl(fd_ltc185x, MZIO_LTC1857_INIT,  0);
-
-    }
-}
-
-void MainWindow::on_readADC_clicked()
-{
-    int retVal;
-    int err;
-    unsigned int a2dVal = 0;
-    unsigned char adc_data[2];
-    printf("Reading ADC\n");
-    fflush(stdout);
-
-    //.............................................................................
-    //
-    // Set up mzio
-    // Set all to reset state
-    ioctl(fd_mzio, MZIO_CAMIF_SET_UP, 	0x1FFF);	// Pull-ups off
-    ioctl(fd_mzio, MZIO_CAMIF_SET_CFG, 	0);				// All inputs
-    ioctl(fd_mzio, MZIO_CAMIF_SET_DAT, 	0);				// All data low
-
-    // Enable power
-    ioctl(fd_mzio, MZIO_GPIO_SET_LOW,  	MZIO_5V_MZ_ENn);
-    ioctl(fd_mzio, MZIO_GPIO_SET_LOW,  	MZIO_3V3_EXT_ENn);
-    ioctl(fd_mzio, MZIO_GPIO_SET_HIGH,  MZIO_MOD_PWR);
-
-    // Now configure lines
-    ioctl(fd_mzio, MZIO_CAMIF_SET_DAT, 	bGPDAT_CAM_init);
-    ioctl(fd_mzio, MZIO_CAMIF_SET_UP, 	bGPUP_CAM_init);
-    ioctl(fd_mzio, MZIO_CAMIF_SET_CFG, 	bGPCON_CAM_init);
-
-
-    // Setup the SPI
-    err = ioctl(fd_spi, SPI_IOC_WR_MODE, &spi_mode);
-    if(err < 0)
-    {
-        printf("Could not set SPIMode\n");
-        goto exit;
-    }
-
-    err = ioctl(fd_spi, SPI_IOC_WR_BITS_PER_WORD, &spi_bitsPerWord);
-    if(err < 0)
-    {
-        printf("Could not set SPI bitsPerWord\n");
-        goto exit;
-    }
-
-    err = ioctl(fd_spi, SPI_IOC_WR_MAX_SPEED_HZ, &spi_speed);
-    if(err < 0)
-    {
-        printf("Could not set SPI speed\n");
-        goto exit;
-    }
-
-    printf("SPI setup done\n");
-
-    {
-        int x;
-        unsigned int a2dVal = 0;
-        unsigned char adc_data[2];
-
-        int mzio_data = 0;
-
-        for(x=1; x<=2; x++)
+        // Setup the channels
+        if (ui->Ch0->isChecked())
         {
+            control = LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain;
+            printf("Ch0 setup 0x%lx", control);
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH0SE_SETUP, control);
+            if (err<0) printf("Can't set Ch0 settings\n");
 
-            printf("1\n");
+            tempStr = ui->ch0_samrate->text();
+            tempULong = tempStr.toULong();
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH0SE_SET_PERIOD, tempULong);
+            if (err<0) printf("Can't set Ch0 period\n");
 
-            switch(x)
-            {
-                case 1:	adc_data[0] = ADC_SINGLE_ENDED_INPUT1 | ADC_5V_UNI; break;
-                case 2:	adc_data[0] = ADC_SINGLE_ENDED_INPUT2 | ADC_5V_UNI; break;
-                case 3:	adc_data[0] = ADC_SINGLE_ENDED_INPUT3 | ADC_5V_UNI; break;
-                case 4:	adc_data[0] = ADC_SINGLE_ENDED_INPUT4 | ADC_5V_UNI; break;
-                case 5:	adc_data[0] = ADC_SINGLE_ENDED_INPUT5 | ADC_5V_UNI; break;
-                case 6:	adc_data[0] = ADC_SINGLE_ENDED_INPUT6 | ADC_5V_UNI; break;
-                case 7:	adc_data[0] = ADC_SINGLE_ENDED_INPUT7 | ADC_5V_UNI; break;
-                case 8:	adc_data[0] = ADC_SINGLE_ENDED_INPUT8 | ADC_5V_UNI; break;
-            }
+        }
 
-            adc_data[1] = 0;
-
-
-            // Start conversion and wait until done
-            mzio_data = ioctl(fd_mzio, MZIO_CAMIF_GET_DAT, 0);
-            mzio_data |= bDAT_ADC_CNV_START_CAM_DATA6;
-            mzio_data &= ~(bDAT_CRNT_CN3_EN_N_CAM_DATA2);
-            ioctl(fd_mzio, MZIO_CAMIF_SET_DAT, 	mzio_data);
-
-            sleep(2);
-
-            printf("2\n");
-
-            /*
-        dwStart = GetTickCount();
-        while((GetTickCount() - dwStart) <= 10)
+        if (ui->Ch1->isChecked())
         {
-            data = ioctl(fd, MZIO_CAMIF_GET_DAT, 0);
-            if(data & bDAT_ADC_CNV_BSY_N_CAM_DATA7)
-                break;
+            control = LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain;
+            printf("Ch1 setup 0x%lx", control);
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH1SE_SETUP, control);
+            if (err<0) printf("Can't set Ch1 settings\n");
+
+            tempStr = ui->ch1_samrate->text();
+            tempULong = tempStr.toULong();
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH1SE_SET_PERIOD, tempULong);
+            if (err<0) printf("Can't set Ch1 period\n");
+
         }
-*/
 
-            mzio_data = ioctl(fd_mzio, MZIO_CAMIF_GET_DAT, 0);
-            mzio_data &= ~bDAT_ADC_CNV_START_CAM_DATA6;
-            mzio_data |= bDAT_CRNT_CN3_EN_N_CAM_DATA2;
-            ioctl(fd_mzio, MZIO_CAMIF_SET_DAT, 	mzio_data);
+        if (ui->Ch2->isChecked())
+        {
+            control = LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain;
+            printf("Ch2 setup 0x%lx", control);
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH2SE_SETUP, control);
+            if (err<0) printf("Can't set Ch2 settings\n");
 
-            printf("3\n");
+            tempStr = ui->ch2_samrate->text();
+            tempULong = tempStr.toULong();
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH2SE_SET_PERIOD, tempULong);
+            if (err<0) printf("Can't set Ch2 period\n");
 
-            retVal = spiWriteRead(fd_spi, adc_data, 2);
-
-
-            //printf("adc_data[1] = 0x%X  adc_data[0] = 0x%X\n", adc_data[1], adc_data[0]);
-
-            a2dVal = (adc_data[0]<< 8) | adc_data[1];
-            a2dVal >>= 4;
-
-
-            printf("The CH:%d result is: 0x%x\n", x, a2dVal);
         }
+
+        if (ui->Ch3->isChecked())
+        {
+            control = LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain;
+            printf("Ch3 setup 0x%lx", control);
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH3SE_SETUP, control);
+            if (err<0) printf("Can't set Ch3 settings\n");
+
+            tempStr = ui->ch3_samrate->text();
+            tempULong = tempStr.toULong();
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH3SE_SET_PERIOD, tempULong);
+            if (err<0) printf("Can't set Ch3 period\n");
+
+        }
+
+        if (ui->Ch4->isChecked())
+        {
+            control = LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain;
+            printf("Ch4 setup 0x%lx", control);
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH4SE_SETUP, control);
+            if (err<0) printf("Can't set Ch4 settings\n");
+
+            tempStr = ui->ch4_samrate->text();
+            tempULong = tempStr.toULong();
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH4SE_SET_PERIOD, tempULong);
+            if (err<0) printf("Can't set Ch4 period\n");
+        }
+
+        if (ui->Ch5->isChecked())
+        {
+            control = LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain;
+            printf("Ch5 setup 0x%lx", control);
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH5SE_SETUP, control);
+            if (err<0) printf("Can't set Ch2 settings\n");
+
+            tempStr = ui->ch5_samrate->text();
+            tempULong = tempStr.toULong();
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH5SE_SET_PERIOD, tempULong);
+            if (err<0) printf("Can't set Ch5 period\n");
+        }
+
+        if (ui->Ch6->isChecked())
+        {
+            control = LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain;
+            printf("Ch6 setup 0x%lx", control);
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH6SE_SETUP, control);
+            if (err<0) printf("Can't set Ch6 settings\n");
+
+            tempStr = ui->ch6_samrate->text();
+            tempULong = tempStr.toULong();
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH6SE_SET_PERIOD, tempULong);
+            if (err<0) printf("Can't set Ch6 period\n");
+
+        }
+
+        if (ui->Ch7->isChecked())
+        {
+            control = LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain;
+            printf("Ch7 setup 0x%lx", control);
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH7SE_SETUP, control);
+            if (err<0) printf("Can't set Ch7 settings\n");
+
+            tempStr = ui->ch7_samrate->text();
+            tempULong = tempStr.toULong();
+            err = ioctl(fd_ltc185x, MZIO_LTC185x_CH7SE_SET_PERIOD, tempULong);
+            if (err<0) printf("Can't set Ch7 period\n");
+
+        }
+
+
+        // TODO: Get differentials processed here
+
+        // Start sampling
+        err = ioctl(fd_ltc185x, MZIO_LTC185x_START, 0);
+        if (err<0) printf("Can't start ADC\n");
     }
-exit:
+    else
+    {
+        printf("LTC185x library failure");
+    }
+
     fflush(stdout);
 }
+
+void MainWindow::on_Stop_clicked()
+{
+    int             err;
+
+    if (fd_ltc185x)
+    {
+        // Stop sampling
+        err = ioctl(fd_ltc185x, MZIO_LTC185x_STOP, 0);
+        if (err<0) printf("Can't stop ADC\n");
+
+        // Deinit the ADC
+        err = ioctl(fd_ltc185x, MZIO_LTC185x_DEINIT, 0);
+        if (err<0) printf("Can't deinit ADC\n");
+    }
+    else
+    {
+        printf("LTC185x library failure");
+    }
+
+    fflush(stdout);
+}
+
+void MainWindow::on_Ch0_clicked()
+{
+    strBuf.sprintf("Ch0 %s", (ui->Ch0->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_Ch1_clicked()
+{
+    strBuf.sprintf("Ch1 %s", (ui->Ch1->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_Ch2_clicked()
+{
+    strBuf.sprintf("Ch2 %s", (ui->Ch2->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_Ch3_clicked()
+{
+    strBuf.sprintf("Ch3 %s", (ui->Ch3->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_Ch4_clicked()
+{
+    strBuf.sprintf("Ch4 %s", (ui->Ch4->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_Ch5_clicked()
+{
+    QString strBuf="";
+    strBuf.sprintf("Ch0 %s", (ui->Ch0->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_Ch6_clicked()
+{
+    strBuf.sprintf("Ch6 %s", (ui->Ch6->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+
+void MainWindow::on_Ch7_clicked()
+{
+    strBuf.sprintf("Ch7 %s", (ui->Ch7->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_Ch01_clicked()
+{
+    strBuf.sprintf("Ch01 %s", (ui->Ch01->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_Ch23_clicked()
+{
+    strBuf.sprintf("Ch23 %s", (ui->Ch23->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_Ch45_clicked()
+{
+    QString strBuf="";
+    strBuf.sprintf("Ch45 %s", (ui->Ch45->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_Ch67_clicked()
+{
+    QString strBuf="";
+    strBuf.sprintf("Ch67 %s", (ui->Ch67->checkState()) ? "selected":"deselected");
+    ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_Ch0_samrate_valueChanged(int arg1)
+{
+//    QString strBuf="";
+  //  strBuf.sprintf("Ch0 sample rate %d", arg1);
+   // ui->status->setText(strBuf);
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_timer_event()
+{
+    if (status_erase_count-- <=0)
+    {
+        strBuf.sprintf("");
+        ui->status->setText(strBuf);
+        RESET_STATUS_TIMER;
+    }
+
+    printf(".");
+    fflush(stdout);
+}
+
+//void MainWindow::on_up_clicked()
+void MainWindow::on_up_pressed()
+{
+    int chSelected;
+
+    if (ui->ch0_radio->isChecked())         chSelected=0;
+    else if (ui->ch1_radio->isChecked())    chSelected=1;
+    else if (ui->ch2_radio->isChecked())    chSelected=2;
+    else if (ui->ch3_radio->isChecked())    chSelected=3;
+    else if (ui->ch4_radio->isChecked())    chSelected=4;
+    else if (ui->ch5_radio->isChecked())    chSelected=5;
+    else if (ui->ch6_radio->isChecked())    chSelected=6;
+    else if (ui->ch7_radio->isChecked())    chSelected=7;
+
+    samrate_vals[chSelected]+=10;
+    strBuf.sprintf("Ch%d sampling %lu usec", chSelected, samrate_vals[chSelected]);
+    ui->status->setText(strBuf);
+
+    strBuf.sprintf("%lu", samrate_vals[chSelected]);
+    switch (chSelected)
+    {
+    case 0:
+        ui->ch0_samrate->setText(strBuf);
+        break;
+    case 1:
+        ui->ch1_samrate->setText(strBuf);
+        break;
+    case 2:
+        ui->ch2_samrate->setText(strBuf);
+        break;
+    case 3:
+        ui->ch3_samrate->setText(strBuf);
+        break;
+    case 4:
+        ui->ch4_samrate->setText(strBuf);
+        break;
+    case 5:
+        ui->ch5_samrate->setText(strBuf);
+        break;
+    case 6:
+        ui->ch6_samrate->setText(strBuf);
+        break;
+    case 7:
+        ui->ch7_samrate->setText(strBuf);
+        break;
+    }
+
+    RESET_STATUS_TIMER;
+}
+
+void MainWindow::on_down_clicked()
+{
+    int chSelected;
+
+    if (ui->ch0_radio->isChecked())         chSelected=0;
+    else if (ui->ch1_radio->isChecked())    chSelected=1;
+    else if (ui->ch2_radio->isChecked())    chSelected=2;
+    else if (ui->ch3_radio->isChecked())    chSelected=3;
+    else if (ui->ch4_radio->isChecked())    chSelected=4;
+    else if (ui->ch5_radio->isChecked())    chSelected=5;
+    else if (ui->ch6_radio->isChecked())    chSelected=6;
+    else if (ui->ch7_radio->isChecked())    chSelected=7;
+
+    samrate_vals[chSelected]-= 10;
+    strBuf.sprintf("Ch%d sampling %lu usec", chSelected, samrate_vals[chSelected]);
+    ui->status->setText(strBuf);
+
+    strBuf.sprintf("%lu", samrate_vals[chSelected]);
+    switch (chSelected)
+    {
+    case 0:
+        ui->ch0_samrate->setText(strBuf);
+        break;
+    case 1:
+        ui->ch1_samrate->setText(strBuf);
+        break;
+    case 2:
+        ui->ch2_samrate->setText(strBuf);
+        break;
+    case 3:
+        ui->ch3_samrate->setText(strBuf);
+        break;
+    case 4:
+        ui->ch4_samrate->setText(strBuf);
+        break;
+    case 5:
+        ui->ch5_samrate->setText(strBuf);
+        break;
+    case 6:
+        ui->ch6_samrate->setText(strBuf);
+        break;
+    case 7:
+        ui->ch7_samrate->setText(strBuf);
+        break;
+    }
+
+    RESET_STATUS_TIMER;
+}
+

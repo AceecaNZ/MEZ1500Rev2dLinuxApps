@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu Apr 17 13:58:02 2014
+** Created: Tue May 6 14:41:09 2014
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+      19,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,20 +32,40 @@ static const uint qt_meta_data_MainWindow[] = {
 
  // slots: signature, parameters, type, tag, flags
       12,   11,   11,   11, 0x08,
-      34,   11,   11,   11, 0x08,
-      57,   11,   11,   11, 0x08,
-      79,   11,   11,   11, 0x08,
-     102,   11,   11,   11, 0x08,
-     123,   11,   11,   11, 0x08,
+      31,   11,   11,   11, 0x08,
+      49,   11,   11,   11, 0x08,
+      66,   11,   11,   11, 0x08,
+      83,   11,   11,   11, 0x08,
+     100,   11,   11,   11, 0x08,
+     117,   11,   11,   11, 0x08,
+     134,   11,   11,   11, 0x08,
+     151,   11,   11,   11, 0x08,
+     168,   11,   11,   11, 0x08,
+     185,   11,   11,   11, 0x08,
+     203,   11,   11,   11, 0x08,
+     221,   11,   11,   11, 0x08,
+     239,   11,   11,   11, 0x08,
+     262,  257,   11,   11, 0x08,
+     295,   11,   11,   11, 0x08,
+     312,   11,   11,   11, 0x08,
+     336,   11,   11,   11, 0x08,
+     354,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0on_modpwron_clicked()\0"
-    "on_modpwroff_clicked()\0on_modrston_clicked()\0"
-    "on_modrstoff_clicked()\0on_initadc_clicked()\0"
-    "on_readADC_clicked()\0"
+    "MainWindow\0\0on_Start_clicked()\0"
+    "on_Stop_clicked()\0on_Ch0_clicked()\0"
+    "on_Ch1_clicked()\0on_Ch2_clicked()\0"
+    "on_Ch3_clicked()\0on_Ch4_clicked()\0"
+    "on_Ch5_clicked()\0on_Ch6_clicked()\0"
+    "on_Ch7_clicked()\0on_Ch01_clicked()\0"
+    "on_Ch23_clicked()\0on_Ch45_clicked()\0"
+    "on_Ch67_clicked()\0arg1\0"
+    "on_Ch0_samrate_valueChanged(int)\0"
+    "on_timer_event()\0run_keyboard_lineEdit()\0"
+    "on_down_clicked()\0on_up_pressed()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -77,15 +97,28 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: on_modpwron_clicked(); break;
-        case 1: on_modpwroff_clicked(); break;
-        case 2: on_modrston_clicked(); break;
-        case 3: on_modrstoff_clicked(); break;
-        case 4: on_initadc_clicked(); break;
-        case 5: on_readADC_clicked(); break;
+        case 0: on_Start_clicked(); break;
+        case 1: on_Stop_clicked(); break;
+        case 2: on_Ch0_clicked(); break;
+        case 3: on_Ch1_clicked(); break;
+        case 4: on_Ch2_clicked(); break;
+        case 5: on_Ch3_clicked(); break;
+        case 6: on_Ch4_clicked(); break;
+        case 7: on_Ch5_clicked(); break;
+        case 8: on_Ch6_clicked(); break;
+        case 9: on_Ch7_clicked(); break;
+        case 10: on_Ch01_clicked(); break;
+        case 11: on_Ch23_clicked(); break;
+        case 12: on_Ch45_clicked(); break;
+        case 13: on_Ch67_clicked(); break;
+        case 14: on_Ch0_samrate_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 15: on_timer_event(); break;
+        case 16: run_keyboard_lineEdit(); break;
+        case 17: on_down_clicked(); break;
+        case 18: on_up_pressed(); break;
         default: ;
         }
-        _id -= 6;
+        _id -= 19;
     }
     return _id;
 }

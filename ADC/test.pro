@@ -18,10 +18,14 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp\
+    keyboard/keyboard.cpp
 
 HEADERS  += mainwindow.h\
         adc1.h\
-        /opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/drivers/char/MEZ1500_mzio_ltc185x.h
+        /opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/drivers/char/MEZ1500_mzio_ltc185x.h\
+    keyboard/keyboard.h \
+    keyboard/ui_keyboard.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    keyboard/keyboard.ui
