@@ -51,7 +51,6 @@ MainWindow::MainWindow(QWidget *parent) :
     for (i=0; i<12; i++)
     {
         samrate_vals[i] = 1000000;
-        samrate_vals[i] = 5;
     }
 
     strBuf.sprintf("%lu", samrate_vals[0]);
