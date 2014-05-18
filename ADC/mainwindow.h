@@ -56,6 +56,8 @@ private slots:
 
     void on_up_pressed();
 
+    void on_pushButton_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -65,6 +67,8 @@ private:
     QString strBuf;
     Keyboard *lineEditkeyboard;
     unsigned long samrate_vals[12];
+
+    int bigDataBuffer[2048];
 };
 
 #endif // MAINWINDOW_H

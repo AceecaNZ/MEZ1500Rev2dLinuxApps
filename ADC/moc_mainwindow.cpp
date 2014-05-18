@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Tue May 6 14:41:09 2014
+** Created: Mon May 19 10:42:36 2014
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      19,   14, // methods
+      20,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -50,6 +50,7 @@ static const uint qt_meta_data_MainWindow[] = {
      312,   11,   11,   11, 0x08,
      336,   11,   11,   11, 0x08,
      354,   11,   11,   11, 0x08,
+     370,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -66,6 +67,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_Ch0_samrate_valueChanged(int)\0"
     "on_timer_event()\0run_keyboard_lineEdit()\0"
     "on_down_clicked()\0on_up_pressed()\0"
+    "on_pushButton_clicked()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -116,9 +118,10 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 16: run_keyboard_lineEdit(); break;
         case 17: on_down_clicked(); break;
         case 18: on_up_pressed(); break;
+        case 19: on_pushButton_clicked(); break;
         default: ;
         }
-        _id -= 19;
+        _id -= 20;
     }
     return _id;
 }

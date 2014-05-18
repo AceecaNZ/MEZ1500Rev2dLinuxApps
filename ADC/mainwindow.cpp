@@ -459,3 +459,15 @@ void MainWindow::on_down_clicked()
     RESET_STATUS_TIMER;
 }
 
+
+void MainWindow::on_pushButton_clicked()
+{
+    int err;
+
+    // Stop sampling
+    err = ioctl(fd_ltc185x, MZIO_LTC185x_READ, bigDataBuffer);
+    if (err<0) printf("Can't read ADC data\n");
+
+    printf("Reading ADC data to 0x%lx\n", bigDataBuffer);
+    fflush(stdout);
+}

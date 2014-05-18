@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue May 6 14:40:05 2014
+** Created: Mon May 19 10:40:55 2014
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -72,6 +72,7 @@ public:
     QWidget *tab_2;
     QPushButton *Start;
     QPushButton *Stop;
+    QPushButton *pushButton;
     QMenuBar *menuBar;
     QMenu *menuMenu;
     QStatusBar *statusBar;
@@ -210,6 +211,9 @@ public:
         Stop = new QPushButton(tab_2);
         Stop->setObjectName(QString::fromUtf8("Stop"));
         Stop->setGeometry(QRect(60, 150, 51, 27));
+        pushButton = new QPushButton(tab_2);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(140, 150, 80, 21));
         Setup->addTab(tab_2, QString());
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -228,7 +232,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        Setup->setCurrentIndex(0);
+        Setup->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -265,6 +269,7 @@ public:
         Setup->setTabText(Setup->indexOf(tab), QApplication::translate("MainWindow", "Setup", 0, QApplication::UnicodeUTF8));
         Start->setText(QApplication::translate("MainWindow", "Start", 0, QApplication::UnicodeUTF8));
         Stop->setText(QApplication::translate("MainWindow", "Stop", 0, QApplication::UnicodeUTF8));
+        pushButton->setText(QApplication::translate("MainWindow", "Read", 0, QApplication::UnicodeUTF8));
         Setup->setTabText(Setup->indexOf(tab_2), QApplication::translate("MainWindow", "Data", 0, QApplication::UnicodeUTF8));
         menuMenu->setTitle(QApplication::translate("MainWindow", "Menu", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
