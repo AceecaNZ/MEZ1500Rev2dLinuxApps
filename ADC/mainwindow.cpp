@@ -371,17 +371,18 @@ void MainWindow::on_timer_event()
         ReadBufferData  RdBufDat;
         unsigned int    overun=0;
         unsigned short  *datPtr;
-        unsigned short tempBuf[5];
+        int             size=sizeof(short)*5;
+        unsigned short  *tempBuf = (unsigned short*) malloc (size);
 
-        RdBufDat.buf = Ch0Buf;
+ //       RdBufDat.buf = Ch0Buf;
         RdBufDat.buf = tempBuf;
-        memset(Ch0Buf, 0, sizeof(Ch0Buf));
-        memset(tempBuf, 0, sizeof(tempBuf));
-        RdBufDat.numSamples = CH0SIZE;
-        RdBufDat.numSamples = sizeof(tempBuf);
+//        memset(Ch0Buf, 0, sizeof(Ch0Buf));
+        memset(tempBuf, 0, size);
+ //       RdBufDat.numSamples = CH0SIZE;
+        RdBufDat.numSamples = size;
         RdBufDat.overun = &overun;
 
-        printf("Ch0Buf 0x%lx\n", (unsigned long) Ch0Buf);
+        printf("buf 0x%lx\n", (unsigned long) RdBufDat.buf);
         gErr = ioctl(fd_ltc185x, MZIO_LTC185x_CH0SE_READ_BUFFER, &RdBufDat);
         if (gErr<0)  printf("Error reading Ch0 buffer %s\n", strerror(gErr));
         else
@@ -391,6 +392,8 @@ void MainWindow::on_timer_event()
             datPtr = tempBuf;
             printf("Ch0 { %d %d %d %d %d } %d %d\n", datPtr[0],datPtr[1],datPtr[2],datPtr[3],datPtr[4], Ch0NumSamples, overun);
          }
+
+        if (tempBuf) free(tempBuf);
     }
     fflush(stdout);
 }
