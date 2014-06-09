@@ -34,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->ch0_samrate,SIGNAL(selectionChanged()),this,SLOT(run_keyboard_lineEdit()));
 
     count   = 0;
+    isSampling = 0;
     fd_ltc185x = 0;
     fd_ltc185x = open("/dev/ltc185x", O_RDWR);
     if (fd_ltc185x < 0)
@@ -46,6 +47,10 @@ MainWindow::MainWindow(QWidget *parent) :
     timer->start(1000);
 
     RESET_STATUS_TIMER;
+
+    // Allocate sampling buffers
+    Ch0Buf = (unsigned short*) malloc(CH0SIZE * sampleSize);
+    if (!Ch0Buf) printf("Error allocating Ch0Buf\n");
 
     // For now init all the sampling rate values to 1000us
     for (i=0; i<12; i++)
@@ -100,6 +105,7 @@ void MainWindow::on_Start_clicked()
     if (fd_ltc185x)
     {
         // Init the ADC
+        err = ioctl(fd_ltc185x, MZIO_LTC185x_DEINIT, 0);
         err = ioctl(fd_ltc185x, MZIO_LTC185x_INIT, 0);
         if (err<0) printf("Can't init the ADC\n");
 
@@ -107,7 +113,7 @@ void MainWindow::on_Start_clicked()
         if (ui->Ch0->isChecked())
         {
             control = LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain;
-            printf("Ch0 setup 0x%lx", control);
+            printf("Ch0 setup 0x%lx\n", control);
             err = ioctl(fd_ltc185x, MZIO_LTC185x_CH0SE_SETUP, control);
             if (err<0) printf("Can't set Ch0 settings\n");
 
@@ -115,7 +121,6 @@ void MainWindow::on_Start_clicked()
             tempULong = tempStr.toULong();
             err = ioctl(fd_ltc185x, MZIO_LTC185x_CH0SE_SET_PERIOD, tempULong);
             if (err<0) printf("Can't set Ch0 period\n");
-
         }
 
         if (ui->Ch1->isChecked())
@@ -220,6 +225,8 @@ void MainWindow::on_Start_clicked()
         // Start sampling
         err = ioctl(fd_ltc185x, MZIO_LTC185x_START, 0);
         if (err<0) printf("Can't start ADC\n");
+
+        isSampling = 1;
     }
     else
     {
@@ -241,7 +248,7 @@ void MainWindow::on_Stop_clicked()
 
         // Deinit the ADC
         err = ioctl(fd_ltc185x, MZIO_LTC185x_DEINIT, 0);
-        if (err<0) printf("Can't deinit ADC\n");
+        if (err<0) printf("Can't deinit ADC\n");        
     }
     else
     {
@@ -249,6 +256,8 @@ void MainWindow::on_Stop_clicked()
     }
 
     fflush(stdout);
+
+    isSampling = 0;
 }
 
 void MainWindow::on_Ch0_clicked()
@@ -356,7 +365,33 @@ void MainWindow::on_timer_event()
         RESET_STATUS_TIMER;
     }
 
-    printf(".");
+//    printf(".");
+    if (isSampling)
+    {
+        ReadBufferData  RdBufDat;
+        unsigned int    overun=0;
+        unsigned short  *datPtr;
+        unsigned short tempBuf[5];
+
+        RdBufDat.buf = Ch0Buf;
+        RdBufDat.buf = tempBuf;
+        memset(Ch0Buf, 0, sizeof(Ch0Buf));
+        memset(tempBuf, 0, sizeof(tempBuf));
+        RdBufDat.numSamples = CH0SIZE;
+        RdBufDat.numSamples = sizeof(tempBuf);
+        RdBufDat.overun = &overun;
+
+        printf("Ch0Buf 0x%lx\n", (unsigned long) Ch0Buf);
+        gErr = ioctl(fd_ltc185x, MZIO_LTC185x_CH0SE_READ_BUFFER, &RdBufDat);
+        if (gErr<0)  printf("Error reading Ch0 buffer %s\n", strerror(gErr));
+        else
+        {
+            Ch0NumSamples=gErr;
+            datPtr = Ch0Buf;
+            datPtr = tempBuf;
+            printf("Ch0 { %d %d %d %d %d } %d %d\n", datPtr[0],datPtr[1],datPtr[2],datPtr[3],datPtr[4], Ch0NumSamples, overun);
+         }
+    }
     fflush(stdout);
 }
 
@@ -459,15 +494,13 @@ void MainWindow::on_down_clicked()
     RESET_STATUS_TIMER;
 }
 
-
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_readButton_clicked()
 {
     int err;
 
     // Stop sampling
-    err = ioctl(fd_ltc185x, MZIO_LTC185x_READ, bigDataBuffer);
-    if (err<0) printf("Can't read ADC data\n");
-
-    printf("Reading ADC data to 0x%lx\n", bigDataBuffer);
-    fflush(stdout);
+//    err = ioctl(fd_ltc185x, MZIO_LTC185x_READ, bigDataBuffer);
+ //   if (err<0) printf("Can't read ADC data\n");
+  //  else printf("Reading ADC data to 0x%lx\n %d %d %d %d %d", (unsigned long) bigDataBuffer, bigDataBuffer[0], bigDataBuffer[1],bigDataBuffer[2],bigDataBuffer[3],bigDataBuffer[4]);
+   // fflush(stdout);
 }

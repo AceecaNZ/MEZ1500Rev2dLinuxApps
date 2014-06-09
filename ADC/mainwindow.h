@@ -5,6 +5,9 @@
 #include <sys/ioctl.h>
 #include "keyboard/keyboard.h"
 
+#define CH0SIZE   50
+#define sampleSize sizeof(short)
+
 namespace Ui {
 class MainWindow;
 }
@@ -56,19 +59,22 @@ private slots:
 
     void on_up_pressed();
 
-    void on_pushButton_clicked();
+    void on_readButton_clicked();
 
 private:
     Ui::MainWindow *ui;
 
-    int count;
-    int fd_ltc185x;
-    unsigned long status_erase_count;
-    QString strBuf;
-    Keyboard *lineEditkeyboard;
-    unsigned long samrate_vals[12];
+    int                 gErr;
+    QString             strBuf;
+    int                 fd_ltc185x;
+    unsigned long       status_erase_count;
+    char                isSampling;
+    Keyboard            *lineEditkeyboard;
+    int                 count;
+    unsigned long       samrate_vals[12];
 
-    int bigDataBuffer[2048];
+    unsigned short      *Ch0Buf;
+    unsigned short      Ch0NumSamples;
 };
 
 #endif // MAINWINDOW_H
