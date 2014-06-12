@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Jun 11 15:34:22 2014
+** Created: Thu Jun 12 13:56:28 2014
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -72,7 +72,14 @@ public:
     QWidget *tab_2;
     QPushButton *Start;
     QPushButton *Stop;
-    QPushButton *readButton;
+    QLineEdit *ChVal_0;
+    QLineEdit *ChVal_1;
+    QLineEdit *ChVal_2;
+    QLineEdit *ChVal_3;
+    QLineEdit *ChVal_4;
+    QLineEdit *ChVal_5;
+    QLineEdit *ChVal_6;
+    QLineEdit *ChVal_7;
     QMenuBar *menuBar;
     QMenu *menuMenu;
     QStatusBar *statusBar;
@@ -207,13 +214,34 @@ public:
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
         Start = new QPushButton(tab_2);
         Start->setObjectName(QString::fromUtf8("Start"));
-        Start->setGeometry(QRect(10, 150, 51, 27));
+        Start->setGeometry(QRect(10, 0, 111, 27));
         Stop = new QPushButton(tab_2);
         Stop->setObjectName(QString::fromUtf8("Stop"));
-        Stop->setGeometry(QRect(60, 150, 51, 27));
-        readButton = new QPushButton(tab_2);
-        readButton->setObjectName(QString::fromUtf8("readButton"));
-        readButton->setGeometry(QRect(140, 150, 80, 21));
+        Stop->setGeometry(QRect(120, 0, 111, 27));
+        ChVal_0 = new QLineEdit(tab_2);
+        ChVal_0->setObjectName(QString::fromUtf8("ChVal_0"));
+        ChVal_0->setGeometry(QRect(12, 40, 211, 21));
+        ChVal_1 = new QLineEdit(tab_2);
+        ChVal_1->setObjectName(QString::fromUtf8("ChVal_1"));
+        ChVal_1->setGeometry(QRect(12, 60, 211, 21));
+        ChVal_2 = new QLineEdit(tab_2);
+        ChVal_2->setObjectName(QString::fromUtf8("ChVal_2"));
+        ChVal_2->setGeometry(QRect(12, 80, 211, 21));
+        ChVal_3 = new QLineEdit(tab_2);
+        ChVal_3->setObjectName(QString::fromUtf8("ChVal_3"));
+        ChVal_3->setGeometry(QRect(12, 100, 211, 21));
+        ChVal_4 = new QLineEdit(tab_2);
+        ChVal_4->setObjectName(QString::fromUtf8("ChVal_4"));
+        ChVal_4->setGeometry(QRect(12, 120, 211, 21));
+        ChVal_5 = new QLineEdit(tab_2);
+        ChVal_5->setObjectName(QString::fromUtf8("ChVal_5"));
+        ChVal_5->setGeometry(QRect(12, 140, 211, 21));
+        ChVal_6 = new QLineEdit(tab_2);
+        ChVal_6->setObjectName(QString::fromUtf8("ChVal_6"));
+        ChVal_6->setGeometry(QRect(12, 160, 211, 21));
+        ChVal_7 = new QLineEdit(tab_2);
+        ChVal_7->setObjectName(QString::fromUtf8("ChVal_7"));
+        ChVal_7->setGeometry(QRect(12, 180, 211, 21));
         Setup->addTab(tab_2, QString());
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -232,7 +260,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        Setup->setCurrentIndex(0);
+        Setup->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -269,7 +297,6 @@ public:
         Setup->setTabText(Setup->indexOf(tab), QApplication::translate("MainWindow", "Setup", 0, QApplication::UnicodeUTF8));
         Start->setText(QApplication::translate("MainWindow", "Start", 0, QApplication::UnicodeUTF8));
         Stop->setText(QApplication::translate("MainWindow", "Stop", 0, QApplication::UnicodeUTF8));
-        readButton->setText(QApplication::translate("MainWindow", "Read", 0, QApplication::UnicodeUTF8));
         Setup->setTabText(Setup->indexOf(tab_2), QApplication::translate("MainWindow", "Data", 0, QApplication::UnicodeUTF8));
         menuMenu->setTitle(QApplication::translate("MainWindow", "Menu", 0, QApplication::UnicodeUTF8));
     } // retranslateUi

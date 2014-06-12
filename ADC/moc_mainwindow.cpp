@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu Jun 12 11:29:41 2014
+** Created: Thu Jun 12 16:35:24 2014
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      21,   14, // methods
+      20,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -45,13 +45,12 @@ static const uint qt_meta_data_MainWindow[] = {
      203,   11,   11,   11, 0x08,
      221,   11,   11,   11, 0x08,
      239,   11,   11,   11, 0x08,
-     262,  257,   11,   11, 0x08,
-     295,   11,   11,   11, 0x08,
-     312,   11,   11,   11, 0x08,
-     336,   11,   11,   11, 0x08,
-     354,   11,   11,   11, 0x08,
-     370,   11,   11,   11, 0x08,
-     412,  398,  394,   11, 0x08,
+     257,   11,   11,   11, 0x08,
+     274,   11,   11,   11, 0x08,
+     298,   11,   11,   11, 0x08,
+     316,   11,   11,   11, 0x08,
+     350,  336,  332,   11, 0x08,
+     408,  391,  332,   11, 0x08,
 
        0        // eod
 };
@@ -64,12 +63,11 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_Ch5_clicked()\0on_Ch6_clicked()\0"
     "on_Ch7_clicked()\0on_Ch01_clicked()\0"
     "on_Ch23_clicked()\0on_Ch45_clicked()\0"
-    "on_Ch67_clicked()\0arg1\0"
-    "on_Ch0_samrate_valueChanged(int)\0"
-    "on_timer_event()\0run_keyboard_lineEdit()\0"
-    "on_down_clicked()\0on_up_pressed()\0"
-    "on_readButton_clicked()\0int\0Ch,buf,overun\0"
+    "on_Ch67_clicked()\0on_timer_event()\0"
+    "run_keyboard_lineEdit()\0on_down_clicked()\0"
+    "on_up_pressed()\0int\0Ch,buf,overun\0"
     "PrvGetSamples(int,unsigned short*,uint*)\0"
+    "Ch,config,period\0PrvSetChannelConfig(int,uint,ulong)\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -115,17 +113,17 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 11: on_Ch23_clicked(); break;
         case 12: on_Ch45_clicked(); break;
         case 13: on_Ch67_clicked(); break;
-        case 14: on_Ch0_samrate_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 15: on_timer_event(); break;
-        case 16: run_keyboard_lineEdit(); break;
-        case 17: on_down_clicked(); break;
-        case 18: on_up_pressed(); break;
-        case 19: on_readButton_clicked(); break;
-        case 20: { int _r = PrvGetSamples((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< unsigned short*(*)>(_a[2])),(*reinterpret_cast< uint*(*)>(_a[3])));
+        case 14: on_timer_event(); break;
+        case 15: run_keyboard_lineEdit(); break;
+        case 16: on_down_clicked(); break;
+        case 17: on_up_pressed(); break;
+        case 18: { int _r = PrvGetSamples((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< unsigned short*(*)>(_a[2])),(*reinterpret_cast< uint*(*)>(_a[3])));
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
+        case 19: { int _r = PrvSetChannelConfig((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< uint(*)>(_a[2])),(*reinterpret_cast< ulong(*)>(_a[3])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
         default: ;
         }
-        _id -= 21;
+        _id -= 20;
     }
     return _id;
 }

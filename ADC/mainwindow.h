@@ -50,8 +50,6 @@ private slots:
 
     void on_Ch67_clicked();
 
-    void on_Ch0_samrate_valueChanged(int arg1);
-
     void on_timer_event();
 
     void run_keyboard_lineEdit();
@@ -60,10 +58,9 @@ private slots:
 
     void on_up_pressed();
 
-    void on_readButton_clicked();
-
     int PrvGetSamples(int Ch, unsigned short* buf, unsigned int *overun);
 
+    int PrvSetChannelConfig(int Ch, unsigned int config, unsigned long period);
 private:
     Ui::MainWindow *ui;
 
