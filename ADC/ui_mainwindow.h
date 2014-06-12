@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon May 19 15:15:29 2014
+** Created: Wed Jun 11 15:34:22 2014
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -124,7 +124,7 @@ public:
         Ch1->setGeometry(QRect(20, 40, 85, 21));
         Ch45 = new QCheckBox(tab);
         Ch45->setObjectName(QString::fromUtf8("Ch45"));
-        Ch45->setGeometry(QRect(0, 110, 85, 21));
+        Ch45->setGeometry(QRect(0, 110, 16, 21));
         ch4_samrate = new QLineEdit(tab);
         ch4_samrate->setObjectName(QString::fromUtf8("ch4_samrate"));
         ch4_samrate->setGeometry(QRect(70, 100, 81, 21));
@@ -133,7 +133,7 @@ public:
         ch2_samrate->setGeometry(QRect(70, 60, 81, 21));
         Ch67 = new QCheckBox(tab);
         Ch67->setObjectName(QString::fromUtf8("Ch67"));
-        Ch67->setGeometry(QRect(0, 150, 85, 21));
+        Ch67->setGeometry(QRect(0, 150, 16, 21));
         ch1_samrate = new QLineEdit(tab);
         ch1_samrate->setObjectName(QString::fromUtf8("ch1_samrate"));
         ch1_samrate->setGeometry(QRect(70, 40, 81, 21));
@@ -148,13 +148,13 @@ public:
         ch3_samrate->setGeometry(QRect(70, 80, 81, 21));
         Ch01 = new QCheckBox(tab);
         Ch01->setObjectName(QString::fromUtf8("Ch01"));
-        Ch01->setGeometry(QRect(0, 30, 85, 21));
+        Ch01->setGeometry(QRect(0, 30, 16, 21));
         ch7_samrate = new QLineEdit(tab);
         ch7_samrate->setObjectName(QString::fromUtf8("ch7_samrate"));
         ch7_samrate->setGeometry(QRect(70, 160, 81, 21));
         Ch23 = new QCheckBox(tab);
         Ch23->setObjectName(QString::fromUtf8("Ch23"));
-        Ch23->setGeometry(QRect(0, 70, 85, 21));
+        Ch23->setGeometry(QRect(0, 70, 16, 21));
         ch5_samrate = new QLineEdit(tab);
         ch5_samrate->setObjectName(QString::fromUtf8("ch5_samrate"));
         ch5_samrate->setGeometry(QRect(70, 120, 81, 21));
@@ -232,7 +232,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        Setup->setCurrentIndex(1);
+        Setup->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(MainWindow);

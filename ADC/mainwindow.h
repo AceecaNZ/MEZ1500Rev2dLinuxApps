@@ -4,8 +4,9 @@
 #include <QMainWindow>
 #include <sys/ioctl.h>
 #include "keyboard/keyboard.h"
+#include "/opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/drivers/char/MEZ1500_mzio_ltc185x.h"
 
-#define CH0SIZE   50
+#define ChMaxReadSamples 50
 #define sampleSize sizeof(short)
 
 namespace Ui {
@@ -61,19 +62,22 @@ private slots:
 
     void on_readButton_clicked();
 
+    int PrvGetSamples(int Ch, unsigned short* buf, unsigned int *overun);
+
 private:
     Ui::MainWindow *ui;
 
     int                 gErr;
     QString             strBuf;
     int                 fd_ltc185x;
-    unsigned long       status_erase_count;
+    int                 status_erase_count;
     char                isSampling;
     Keyboard            *lineEditkeyboard;
     int                 count;
     unsigned long       samrate_vals[12];
 
-    unsigned short      *Ch0Buf;
+    int                 sample_timer_count;     // for reading samples
+    BufData             *RdBuf;
     unsigned short      Ch0NumSamples;
 };
 

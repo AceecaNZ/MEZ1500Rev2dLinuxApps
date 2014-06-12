@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu Jun 5 17:03:45 2014
+** Created: Thu Jun 12 11:29:41 2014
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      21,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -51,6 +51,7 @@ static const uint qt_meta_data_MainWindow[] = {
      336,   11,   11,   11, 0x08,
      354,   11,   11,   11, 0x08,
      370,   11,   11,   11, 0x08,
+     412,  398,  394,   11, 0x08,
 
        0        // eod
 };
@@ -67,7 +68,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_Ch0_samrate_valueChanged(int)\0"
     "on_timer_event()\0run_keyboard_lineEdit()\0"
     "on_down_clicked()\0on_up_pressed()\0"
-    "on_readButton_clicked()\0"
+    "on_readButton_clicked()\0int\0Ch,buf,overun\0"
+    "PrvGetSamples(int,unsigned short*,uint*)\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -119,9 +121,11 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 17: on_down_clicked(); break;
         case 18: on_up_pressed(); break;
         case 19: on_readButton_clicked(); break;
+        case 20: { int _r = PrvGetSamples((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< unsigned short*(*)>(_a[2])),(*reinterpret_cast< uint*(*)>(_a[3])));
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
         default: ;
         }
-        _id -= 20;
+        _id -= 21;
     }
     return _id;
 }
