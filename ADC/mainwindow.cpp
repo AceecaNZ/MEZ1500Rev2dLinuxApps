@@ -12,6 +12,9 @@
 #include "adc1.h"
 #include "keyboard/keyboard.h"
 
+QTextStream cout(stdout);
+QTextStream cerr(stderr);
+
 #define TIMER_PERIOD            1000                        // msecs
 #define RESET_STATUS_TIMER      status_erase_count=5        // 5s
 #define RESET_READ_TIMER        sample_timer_count=1        // 1000ms
@@ -536,6 +539,11 @@ void MainWindow::on_timer_event()
                 int             numSamples;
                 char            tempStr[50];
 
+                QFile           storage("Data.txt");
+
+                storage.open(QIODevice::WriteOnly);
+                QTextStream output(&storage);
+
                 // Setup the channels
                 if (ui->Ch01->isChecked())
                 {
@@ -543,6 +551,7 @@ void MainWindow::on_timer_event()
                     sprintf(tempStr, "Ch01=0x%x %dd\n", RdBuf->Ch01Buf[0],RdBuf->Ch01Buf[0]);
                     printf("%s", tempStr);
                     strBuf.sprintf("%s", tempStr);
+                    output << strBuf;
                     ui->ChVal_0->setText(strBuf);
                     ui->ChVal_1->setText("");
                 }
@@ -555,6 +564,7 @@ void MainWindow::on_timer_event()
                         sprintf(tempStr, "Ch0=0x%x %dd\n", RdBuf->Ch0Buf[0],RdBuf->Ch0Buf[0]);
                         printf("%s", tempStr);
                         strBuf.sprintf("%s", tempStr);
+                        output << strBuf;
                         ui->ChVal_0->setText(strBuf);
                     }
 
@@ -564,6 +574,7 @@ void MainWindow::on_timer_event()
                         sprintf(tempStr, "Ch1=0x%x %dd\n", RdBuf->Ch1Buf[0],RdBuf->Ch1Buf[0]);
                         printf("%s", tempStr);
                         strBuf.sprintf("%s", tempStr);
+                        output << strBuf;
                         ui->ChVal_1->setText(strBuf);
                     }
                 }
