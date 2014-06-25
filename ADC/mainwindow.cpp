@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/ioctl.h>
 #include <QTimer>
+#include <QObject>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "/opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/drivers/char/MEZ1500_mzio.h"
@@ -31,6 +32,14 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     int i;
 
+    printf("char=%d, short=%d, int=%d, long=%d, long long=%d\n",
+        sizeof(char),
+        sizeof(short),
+        sizeof(int),
+        sizeof(long),
+        sizeof(long long));
+
+
     // Allocate sampling buffers
     RdBuf = (BufData*)malloc(sizeof(BufData));
     if (!RdBuf)
@@ -49,8 +58,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->setupUi(this);
 
+    // Pop up keyboard
     lineEditkeyboard = new Keyboard();
     connect(ui->ch0_samrate,SIGNAL(selectionChanged()),this,SLOT(run_keyboard_lineEdit()));
+    connect(ui->ch1_samrate,SIGNAL(selectionChanged()),this,SLOT(run_keyboard_lineEdit()));
+    connect(ui->ch2_samrate,SIGNAL(selectionChanged()),this,SLOT(run_keyboard_lineEdit()));
+    connect(ui->ch3_samrate,SIGNAL(selectionChanged()),this,SLOT(run_keyboard_lineEdit()));
+    connect(ui->ch4_samrate,SIGNAL(selectionChanged()),this,SLOT(run_keyboard_lineEdit()));
+    connect(ui->ch5_samrate,SIGNAL(selectionChanged()),this,SLOT(run_keyboard_lineEdit()));
+    connect(ui->ch6_samrate,SIGNAL(selectionChanged()),this,SLOT(run_keyboard_lineEdit()));
+    connect(ui->ch7_samrate,SIGNAL(selectionChanged()),this,SLOT(run_keyboard_lineEdit()));
 
     count   = 0;
     isSampling = 0;
@@ -65,29 +82,44 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer, SIGNAL(timeout()), this, SLOT(on_timer_event()));
     timer->start(TIMER_PERIOD);
 
+
+    // Signal slot mapping
+    connect(ui->checkBox_5V_Ch_0, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_5V_Ch_1, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_5V_Ch_2, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_5V_Ch_3, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_5V_Ch_4, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_5V_Ch_5, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_5V_Ch_6, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_5V_Ch_7, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_10V_Ch_0, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_10V_Ch_1, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_10V_Ch_2, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_10V_Ch_3, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_10V_Ch_4, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_10V_Ch_5, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_10V_Ch_6, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+    connect(ui->checkBox_10V_Ch_7, SIGNAL(clicked()), this, SLOT(on_checkBox_5V10V_clicked()));
+
+
+
+
     RESET_STATUS_TIMER;
     RESET_READ_TIMER;
 
     // For now init all the sampling rate values to 1000us
-    for (i=0; i<12; i++)
-        samrate_vals[i] = 1000000;
+    i = 1;
+    ui->ch0_samrate->setText(strBuf.sprintf("%u", i));
+    ui->ch1_samrate->setText(strBuf.sprintf("%u", i));
+    ui->ch2_samrate->setText(strBuf.sprintf("%u", i));
+    ui->ch3_samrate->setText(strBuf.sprintf("%u", i));
+    ui->ch4_samrate->setText(strBuf.sprintf("%u", i));
+    ui->ch5_samrate->setText(strBuf.sprintf("%u", i));
+    ui->ch6_samrate->setText(strBuf.sprintf("%u", i));
+    ui->ch7_samrate->setText(strBuf.sprintf("%u", i));
 
-    strBuf.sprintf("%lu", samrate_vals[0]);
-    ui->ch0_samrate->setText(strBuf);
-    strBuf.sprintf("%lu", samrate_vals[1]);
-    ui->ch1_samrate->setText(strBuf);
-    strBuf.sprintf("%lu", samrate_vals[2]);
-    ui->ch2_samrate->setText(strBuf);
-    strBuf.sprintf("%lu", samrate_vals[3]);
-    ui->ch3_samrate->setText(strBuf);
-    strBuf.sprintf("%lu", samrate_vals[4]);
-    ui->ch4_samrate->setText(strBuf);
-    strBuf.sprintf("%lu", samrate_vals[5]);
-    ui->ch5_samrate->setText(strBuf);
-    strBuf.sprintf("%lu", samrate_vals[6]);
-    ui->ch6_samrate->setText(strBuf);
-    strBuf.sprintf("%lu", samrate_vals[7]);
-    ui->ch7_samrate->setText(strBuf);
+    ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
+    minutes=QTime::currentTime().minute();
 
     fflush(stdout);
 }
@@ -110,27 +142,112 @@ void MainWindow::run_keyboard_lineEdit()
     lineEditkeyboard->show();
 }
 
-int MainWindow::PrvSetChannelConfig(int Ch, unsigned int config, unsigned long period)
+int MainWindow::PrvSetChannelConfig(int Ch, unsigned int config, unsigned long long period)
 {
-    ChConfigData ChConfig;
+    ChConfigDataType ChConfigData;
 
-    ChConfig.ch = Ch;
-    ChConfig.config = config;
-    ChConfig.period = period;
+    ChConfigData.ch     = Ch;
+    ChConfigData.config = config;
+    ChConfig[Ch].periodCounter = 0;
 
-    gErr = ioctl(fd_ltc185x, MZIO_LTC185x_CHANNEL_SETUP, &ChConfig);
+    // If period is greater than 1 hour (in useconds), then we split it up in hours and usecs
+    if (period > TimerCount1HrInUs)
+    {
+        ChConfigData.periodUSecs = (unsigned long) (period % TimerCount1HrInUs);
+        ChConfigData.periodHours = (unsigned long) (period / TimerCount1HrInUs);
+    } else
+    {
+        ChConfigData.periodUSecs = period;
+        ChConfigData.periodHours = 0;
+    }
+
+    switch (Ch)
+    {
+        case Chn0:
+            sprintf(ChConfig[Ch].filename, "%s", CH0File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch0");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch0Buf;
+            break;
+
+        case Chn1:
+            sprintf(ChConfig[Ch].filename, "%s", CH1File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch1");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch1Buf;
+            break;
+        case Chn2:
+            sprintf(ChConfig[Ch].filename, "%s", CH2File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch2");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch2Buf;
+            break;
+        case Chn3:
+            sprintf(ChConfig[Ch].filename, "%s", CH3File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch3");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch3Buf;
+            break;
+        case Chn4:
+            sprintf(ChConfig[Ch].filename, "%s", CH4File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch4");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch4Buf;
+            break;
+        case Chn5:
+            sprintf(ChConfig[Ch].filename, "%s", CH5File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch5");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch5Buf;
+            break;
+        case Chn6:
+            sprintf(ChConfig[Ch].filename, "%s", CH6File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch6");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch6Buf;
+            break;
+        case Chn7:
+            sprintf(ChConfig[Ch].filename, "%s", CH7File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch7");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch7Buf;
+            break;
+        case Chn01:
+            sprintf(ChConfig[Ch].filename, "%s", CH01File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch01");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch01Buf;
+            break;
+        case Chn23:
+            sprintf(ChConfig[Ch].filename, "%s", CH23File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch23");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch23Buf;
+            break;
+        case Chn45:
+            sprintf(ChConfig[Ch].filename, "%s", CH45File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch45");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch45Buf;
+            break;
+        case Chn67:
+            sprintf(ChConfig[Ch].filename, "%s", CH67File);
+            sprintf(ChConfig[Ch].chNameStr, "Ch67");
+            ChConfig[Ch].RdBufPtr = RdBuf->Ch67Buf;
+            break;
+    }
+
+
+    gErr = ioctl(fd_ltc185x, MZIO_LTC185x_CHANNEL_SETUP, &ChConfigData);
     if (gErr<0) printf("Can't set Ch%d settings\n", Ch);
-    else printf("Ch%d setup 0x%x period=%ld\n", Ch, config, period);
+    else printf("Ch%d setup 0x%x period=%llu, periodUSecs=%lu, periodHours=%lu\n",
+                Ch,
+                config,
+                period,
+                ChConfigData.periodUSecs,
+                ChConfigData.periodHours
+                );
 
     return gErr;
 }
 
 void MainWindow::on_Start_clicked()
 {
-    unsigned long   tempULong;
+    unsigned long long   tempULong;
     QString         tempStr;
+    int             gain;
     int             err;
     int             startSampling=0;
+    int             index;
 
     if (fd_ltc185x)
     {
@@ -143,9 +260,12 @@ void MainWindow::on_Start_clicked()
         if (ui->Ch01->isChecked())
         {
             startSampling++;
-            tempStr = ui->ch0_samrate->text();
-            tempULong = tempStr.toULong();
-            err = PrvSetChannelConfig(Chn01, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+            index = ui->periodBox_0->currentIndex();
+            tempULong = ui->ch0_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+            gain = 0;
+            if (ui->checkBox_5V_Ch_0->isChecked())
+                gain = LTC185x_ChSetup_Gain;
+            err = PrvSetChannelConfig(Chn01, LTC185x_ChSetup_Enabled|gain, tempULong);
 
             err = PrvSetChannelConfig(Chn0, 0, 0);
             err = PrvSetChannelConfig(Chn1, 0, 0);
@@ -157,9 +277,12 @@ void MainWindow::on_Start_clicked()
             if (ui->Ch0->isChecked())
             {
                 startSampling++;
-                tempStr = ui->ch0_samrate->text();
-                tempULong = tempStr.toULong();
-                err = PrvSetChannelConfig(Chn0, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+                index = ui->periodBox_0->currentIndex();
+                tempULong = ui->ch0_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+                gain = 0;
+                if (ui->checkBox_5V_Ch_0->isChecked())
+                    gain = LTC185x_ChSetup_Gain;
+                err = PrvSetChannelConfig(Chn0, LTC185x_ChSetup_Enabled|gain, tempULong);
             }
             else
             {
@@ -169,9 +292,12 @@ void MainWindow::on_Start_clicked()
             if (ui->Ch1->isChecked())
             {
                 startSampling++;
-                tempStr = ui->ch1_samrate->text();
-                tempULong = tempStr.toULong();
-                err = PrvSetChannelConfig(Chn1, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+                index = ui->periodBox_1->currentIndex();
+                tempULong = ui->ch1_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+                gain = 0;
+                if (ui->checkBox_5V_Ch_1->isChecked())
+                    gain = LTC185x_ChSetup_Gain;
+                err = PrvSetChannelConfig(Chn1, LTC185x_ChSetup_Enabled|gain, tempULong);
             }
             else
             {
@@ -179,13 +305,15 @@ void MainWindow::on_Start_clicked()
             }
         }
 
-
         if (ui->Ch23->isChecked())
         {
             startSampling++;
-            tempStr = ui->ch2_samrate->text();
-            tempULong = tempStr.toULong();
-            err = PrvSetChannelConfig(Chn23, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+            index = ui->periodBox_2->currentIndex();
+            tempULong = ui->ch2_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+            gain = 0;
+            if (ui->checkBox_5V_Ch_2->isChecked())
+                gain = LTC185x_ChSetup_Gain;
+            err = PrvSetChannelConfig(Chn23, LTC185x_ChSetup_Enabled|gain, tempULong);
 
             err = PrvSetChannelConfig(Chn2, 0, 0);
             err = PrvSetChannelConfig(Chn3, 0, 0);
@@ -197,9 +325,12 @@ void MainWindow::on_Start_clicked()
             if (ui->Ch2->isChecked())
             {
                 startSampling++;
-                tempStr = ui->ch2_samrate->text();
-                tempULong = tempStr.toULong();
-                err = PrvSetChannelConfig(Chn2, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+                index = ui->periodBox_2->currentIndex();
+                tempULong = ui->ch2_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+                gain = 0;
+                if (ui->checkBox_5V_Ch_2->isChecked())
+                    gain = LTC185x_ChSetup_Gain;
+                err = PrvSetChannelConfig(Chn2, LTC185x_ChSetup_Enabled|gain, tempULong);
             }
             else
             {
@@ -209,9 +340,12 @@ void MainWindow::on_Start_clicked()
             if (ui->Ch3->isChecked())
             {
                 startSampling++;
-                tempStr = ui->ch3_samrate->text();
-                tempULong = tempStr.toULong();
-                err = PrvSetChannelConfig(Chn3, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+                index = ui->periodBox_3->currentIndex();
+                tempULong = ui->ch3_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+                gain = 0;
+                if (ui->checkBox_5V_Ch_3->isChecked())
+                    gain = LTC185x_ChSetup_Gain;
+                err = PrvSetChannelConfig(Chn3, LTC185x_ChSetup_Enabled|gain, tempULong);
             }
             else
             {
@@ -222,9 +356,12 @@ void MainWindow::on_Start_clicked()
         if (ui->Ch45->isChecked())
         {
             startSampling++;
-            tempStr = ui->ch4_samrate->text();
-            tempULong = tempStr.toULong();
-            err = PrvSetChannelConfig(Chn45, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+            index = ui->periodBox_4->currentIndex();
+            tempULong = ui->ch4_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+            gain = 0;
+            if (ui->checkBox_5V_Ch_4->isChecked())
+                gain = LTC185x_ChSetup_Gain;
+            err = PrvSetChannelConfig(Chn45, LTC185x_ChSetup_Enabled|gain, tempULong);
 
             err = PrvSetChannelConfig(Chn4, 0, 0);
             err = PrvSetChannelConfig(Chn5, 0, 0);
@@ -236,9 +373,12 @@ void MainWindow::on_Start_clicked()
             if (ui->Ch4->isChecked())
             {
                 startSampling++;
-                tempStr = ui->ch4_samrate->text();
-                tempULong = tempStr.toULong();
-                err = PrvSetChannelConfig(Chn4, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+                index = ui->periodBox_4->currentIndex();
+                tempULong = ui->ch4_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+                gain = 0;
+                if (ui->checkBox_5V_Ch_4->isChecked())
+                    gain = LTC185x_ChSetup_Gain;
+                err = PrvSetChannelConfig(Chn4, LTC185x_ChSetup_Enabled|gain, tempULong);
             }
             else
             {
@@ -249,9 +389,12 @@ void MainWindow::on_Start_clicked()
             if (ui->Ch5->isChecked())
             {
                 startSampling++;
-                tempStr = ui->ch5_samrate->text();
-                tempULong = tempStr.toULong();
-                err = PrvSetChannelConfig(Chn5, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+                index = ui->periodBox_5->currentIndex();
+                tempULong = ui->ch5_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+                gain = 0;
+                if (ui->checkBox_5V_Ch_5->isChecked())
+                    gain = LTC185x_ChSetup_Gain;
+                err = PrvSetChannelConfig(Chn5, LTC185x_ChSetup_Enabled|gain, tempULong);
             }
             else
             {
@@ -259,15 +402,15 @@ void MainWindow::on_Start_clicked()
             }
         }
 
-
-
-
         if (ui->Ch67->isChecked())
         {
             startSampling++;
-            tempStr = ui->ch6_samrate->text();
-            tempULong = tempStr.toULong();
-            err = PrvSetChannelConfig(Chn67, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+            index = ui->periodBox_6->currentIndex();
+            tempULong = ui->ch6_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+            gain = 0;
+            if (ui->checkBox_5V_Ch_6->isChecked())
+                gain = LTC185x_ChSetup_Gain;
+            err = PrvSetChannelConfig(Chn67, LTC185x_ChSetup_Enabled|gain, tempULong);
 
             err = PrvSetChannelConfig(Chn6, 0, 0);
             err = PrvSetChannelConfig(Chn7, 0, 0);
@@ -279,9 +422,12 @@ void MainWindow::on_Start_clicked()
             if (ui->Ch6->isChecked())
             {
                 startSampling++;
-                tempStr = ui->ch6_samrate->text();
-                tempULong = tempStr.toULong();
-                err = PrvSetChannelConfig(Chn6, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+                index = ui->periodBox_6->currentIndex();
+                tempULong = ui->ch6_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+                gain = 0;
+                if (ui->checkBox_5V_Ch_6->isChecked())
+                    gain = LTC185x_ChSetup_Gain;
+                err = PrvSetChannelConfig(Chn6, LTC185x_ChSetup_Enabled|gain, tempULong);
             }
             else
             {
@@ -291,9 +437,12 @@ void MainWindow::on_Start_clicked()
             if (ui->Ch7->isChecked())
             {
                 startSampling++;
-                tempStr = ui->ch7_samrate->text();
-                tempULong = tempStr.toULong();
-                err = PrvSetChannelConfig(Chn7, LTC185x_ChSetup_Enabled|LTC185x_ChSetup_Gain, tempULong);
+                index = ui->periodBox_7->currentIndex();
+                tempULong = ui->ch7_samrate->text().toULong() * periodMicroSecondsMultiplier[index];
+                gain = 0;
+                if (ui->checkBox_5V_Ch_7->isChecked())
+                    gain = LTC185x_ChSetup_Gain;
+                err = PrvSetChannelConfig(Chn7, LTC185x_ChSetup_Enabled|gain, tempULong);
             }
             else
             {
@@ -309,6 +458,10 @@ void MainWindow::on_Start_clicked()
             if (err<0) printf("Can't start ADC\n");
 
             isSampling = 1;
+        }
+        else
+        {
+           QMessageBox::information(this, "ADC App", "No channels selected.");
         }
     }
     else
@@ -439,6 +592,10 @@ void MainWindow::on_Ch01_clicked()
 
     ui->Ch0->setChecked(0);
     ui->Ch1->setChecked(0);
+
+    ui->checkBox_5V_Ch_1->setChecked(ui->checkBox_5V_Ch_0->isChecked());
+    ui->checkBox_10V_Ch_1->setChecked(ui->checkBox_10V_Ch_0->isChecked());
+
     RESET_STATUS_TIMER;
 }
 
@@ -451,6 +608,9 @@ void MainWindow::on_Ch23_clicked()
     ui->Ch2->setChecked(0);
     ui->Ch3->setChecked(0);
 
+    ui->checkBox_5V_Ch_3->setChecked(ui->checkBox_5V_Ch_2->isChecked());
+    ui->checkBox_10V_Ch_3->setChecked(ui->checkBox_10V_Ch_2->isChecked());
+
 }
 
 void MainWindow::on_Ch45_clicked()
@@ -461,6 +621,9 @@ void MainWindow::on_Ch45_clicked()
     RESET_STATUS_TIMER;
     ui->Ch4->setChecked(0);
     ui->Ch5->setChecked(0);
+
+    ui->checkBox_5V_Ch_5->setChecked(ui->checkBox_5V_Ch_4->isChecked());
+    ui->checkBox_10V_Ch_5->setChecked(ui->checkBox_10V_Ch_4->isChecked());
 
 }
 
@@ -473,13 +636,16 @@ void MainWindow::on_Ch67_clicked()
 
     ui->Ch6->setChecked(0);
     ui->Ch7->setChecked(0);
+
+    ui->checkBox_5V_Ch_7->setChecked(ui->checkBox_5V_Ch_6->isChecked());
+    ui->checkBox_10V_Ch_7->setChecked(ui->checkBox_10V_Ch_6->isChecked());
 }
 
 
 int MainWindow::PrvGetSamples(int Ch, unsigned short* buf, unsigned int *overun)
 {
     ReadBufferData  RdBufDat;
-//    unsigned short  *datPtr;
+    int             retVal=0;
 
 
     RdBufDat.ch = Ch;
@@ -489,26 +655,12 @@ int MainWindow::PrvGetSamples(int Ch, unsigned short* buf, unsigned int *overun)
 
     gErr = ioctl(fd_ltc185x, MZIO_LTC185x_READ_BUFFER, &RdBufDat);
     if (gErr<0)  printf("Error reading Ch0 buffer %s\n", strerror(gErr));
-    else
-    {
-        Ch0NumSamples=gErr;
-        /*
-        if (RdBufDat.buf == 0)
-        {
-            printf("Number of sample to receive %d, overun=%d\n", Ch0NumSamples, *overun);
-        }
-        else
-        {
-            datPtr = buf;
-            printf("Ch0 { %d %d %d %d %d } %d %d\n", datPtr[0],datPtr[1],datPtr[2],datPtr[3],datPtr[4], Ch0NumSamples, *overun);
-        }
-        */
-    }
+    else retVal=gErr;
 
     if (*overun)
     {
         // If we have an overun situation, we need to restart the sampling
-        strBuf.sprintf("Restarting sampling");
+        strBuf.sprintf("!!! Restart sampling !!!");
         ui->status->setText(strBuf);
         RESET_STATUS_TIMER;
 
@@ -516,9 +668,42 @@ int MainWindow::PrvGetSamples(int Ch, unsigned short* buf, unsigned int *overun)
         MainWindow::on_Start_clicked();
     }
 
-    return 0;
+    return retVal;
 }
 
+
+int MainWindow::PrvWriteSamplesToFile(int ch, QString filename, unsigned short* buf, int numSamples, int overun)
+{
+    QDateTime       dateTime(QDateTime::currentDateTime());
+    QString         dateStr = dateTime.toString("yyyy-MM-dd,");
+    QString         timeStr = dateTime.toString("hh:mm:ss,");
+    int             i;
+
+    QFile           file(filename);
+    if (file.open(QIODevice::Append))
+    {
+        QTextStream out(&file);
+
+        qDebug() << "-> writing to file " << filename << " " << numSamples << " samples";
+
+        for (i=0;i<numSamples; i++)
+        {
+            ChConfig[ch].periodCounter += ChConfig[ch].periodMicroSecs;
+            out << dateStr << timeStr << ChConfig[ch].periodCounter << "," << buf[i] << "," << overun << endl;
+        }
+        file.close();
+        return 0;
+    }
+    else
+    {
+        QMessageBox msgBox;
+        msgBox.setText("Ch01 failed to write to SD card");
+        msgBox.exec();
+        return file.error();
+    }
+
+
+}
 
 void MainWindow::on_timer_event()
 {
@@ -535,139 +720,312 @@ void MainWindow::on_timer_event()
         {
             if (fd_ltc185x)
             {
+                QString         filename;
                 unsigned int    overun=0;
                 int             numSamples;
-                char            tempStr[50];
-
-                QFile           storage("Data.txt");
-
-                storage.open(QIODevice::WriteOnly);
-                QTextStream output(&storage);
+                int             Ch;
+                unsigned short  *dataPtr;
 
                 // Setup the channels
                 if (ui->Ch01->isChecked())
                 {
-                    numSamples = PrvGetSamples(Chn01, RdBuf->Ch01Buf, &overun);
-                    sprintf(tempStr, "Ch01=0x%x %dd\n", RdBuf->Ch01Buf[0],RdBuf->Ch01Buf[0]);
-                    printf("%s", tempStr);
-                    strBuf.sprintf("%s", tempStr);
-                    output << strBuf;
-                    ui->ChVal_0->setText(strBuf);
-                    ui->ChVal_1->setText("");
+                    Ch = Chn01;
+                    dataPtr = ChConfig[Ch].RdBufPtr;
+                    numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                    if (numSamples)
+                    {
+                        strBuf.sprintf("%s=0x%x %dd %dx",
+                                ChConfig[Ch].chNameStr,
+                                dataPtr[0],
+                                dataPtr[0],
+                                numSamples);
+
+                        ui->ChVal_0->setText(strBuf);
+                        ui->ChVal_1->setText("");
+                        qDebug() << strBuf;
+
+                        if (ui->log_Ch_0->isChecked() || ui->log_Ch_1->isChecked())
+                        {
+                            filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                            PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                        }
+                    }
                 }
                 else
                 {
                     if (ui->Ch0->isChecked())
                     {
-                        numSamples = PrvGetSamples(Chn0, RdBuf->Ch0Buf, &overun);
+                        Ch = Chn0;
+                        dataPtr = ChConfig[Ch].RdBufPtr;
+                        numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                        if (numSamples)
+                        {
+                            strBuf.sprintf("%s=0x%x %dd %dx",
+                                    ChConfig[Ch].chNameStr,
+                                    dataPtr[0],
+                                    dataPtr[0],
+                                    numSamples);
 
-                        sprintf(tempStr, "Ch0=0x%x %dd\n", RdBuf->Ch0Buf[0],RdBuf->Ch0Buf[0]);
-                        printf("%s", tempStr);
-                        strBuf.sprintf("%s", tempStr);
-                        output << strBuf;
-                        ui->ChVal_0->setText(strBuf);
+                            ui->ChVal_0->setText(strBuf);
+                            qDebug() << strBuf;
+
+                            if (ui->log_Ch_0->isChecked())
+                            {
+                                filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                                PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                            }
+                        }
                     }
 
                     if (ui->Ch1->isChecked())
                     {
-                        numSamples = PrvGetSamples(Chn1, RdBuf->Ch1Buf, &overun);
-                        sprintf(tempStr, "Ch1=0x%x %dd\n", RdBuf->Ch1Buf[0],RdBuf->Ch1Buf[0]);
-                        printf("%s", tempStr);
-                        strBuf.sprintf("%s", tempStr);
-                        output << strBuf;
-                        ui->ChVal_1->setText(strBuf);
+                        Ch = Chn1;
+                        dataPtr = ChConfig[Ch].RdBufPtr;
+                        numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                        if (numSamples)
+                        {
+                            strBuf.sprintf("%s=0x%x %dd %dx",
+                                    ChConfig[Ch].chNameStr,
+                                    dataPtr[0],
+                                    dataPtr[0],
+                                    numSamples);
+
+                            ui->ChVal_1->setText(strBuf);
+                            qDebug() << strBuf;
+
+                            if (ui->log_Ch_1->isChecked())
+                            {
+                                filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                                PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                            }
+                        }
                     }
                 }
 
                 if (ui->Ch23->isChecked())
                 {
-                    numSamples = PrvGetSamples(Chn23, RdBuf->Ch23Buf, &overun);
-                    sprintf(tempStr, "Ch23=0x%x %dd\n", RdBuf->Ch23Buf[0],RdBuf->Ch23Buf[0]);
-                    printf("%s", tempStr);
-                    strBuf.sprintf("%s", tempStr);
-                    ui->ChVal_2->setText(strBuf);
-                    ui->ChVal_3->setText("");
+                    Ch = Chn23;
+                    dataPtr = ChConfig[Ch].RdBufPtr;
+                    numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                    if (numSamples)
+                    {
+                        strBuf.sprintf("%s=0x%x %dd %dx",
+                                ChConfig[Ch].chNameStr,
+                                dataPtr[0],
+                                dataPtr[0],
+                                numSamples);
+
+                        ui->ChVal_2->setText(strBuf);
+                        ui->ChVal_3->setText("");
+                        qDebug() << strBuf;
+
+                        if (ui->log_Ch_2->isChecked() || ui->log_Ch_3->isChecked())
+                        {
+                            filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                            PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                        }
+                    }
                 }
                 else
                 {
                     if (ui->Ch2->isChecked())
                     {
-                        numSamples = PrvGetSamples(Chn2, RdBuf->Ch2Buf, &overun);
-                        sprintf(tempStr, "Ch2=0x%x %dd\n", RdBuf->Ch2Buf[0],RdBuf->Ch2Buf[0]);
-                        printf("%s", tempStr);
-                        strBuf.sprintf("%s", tempStr);
-                        ui->ChVal_2->setText(strBuf);
+                        Ch = Chn2;
+                        dataPtr = ChConfig[Ch].RdBufPtr;
+                        numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                        if (numSamples)
+                        {
+                            strBuf.sprintf("%s=0x%x %dd %dx",
+                                    ChConfig[Ch].chNameStr,
+                                    dataPtr[0],
+                                    dataPtr[0],
+                                    numSamples);
+
+                            ui->ChVal_2->setText(strBuf);
+                            qDebug() << strBuf;
+
+                            if (ui->log_Ch_2->isChecked())
+                            {
+                                filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                                PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                            }
+                        }
                     }
 
                     if (ui->Ch3->isChecked())
                     {
-                        numSamples = PrvGetSamples(Chn3, RdBuf->Ch3Buf, &overun);
-                        sprintf(tempStr, "Ch3=0x%x %dd\n", RdBuf->Ch3Buf[0],RdBuf->Ch3Buf[0]);
-                        printf("%s", tempStr);
-                        strBuf.sprintf("%s", tempStr);
-                        ui->ChVal_3->setText(strBuf);
+                        Ch = Chn3;
+                        dataPtr = ChConfig[Ch].RdBufPtr;
+                        numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                        if (numSamples)
+                        {
+                            strBuf.sprintf("%s=0x%x %dd %dx",
+                                    ChConfig[Ch].chNameStr,
+                                    dataPtr[0],
+                                    dataPtr[0],
+                                    numSamples);
+
+                            ui->ChVal_3->setText(strBuf);
+                            qDebug() << strBuf;
+
+                            if (ui->log_Ch_3->isChecked())
+                            {
+                                filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                                PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                            }
+                        }
                     }
                 }
 
 
                 if (ui->Ch45->isChecked())
                 {
-                    numSamples = PrvGetSamples(Chn45, RdBuf->Ch45Buf, &overun);
-                    sprintf(tempStr, "Ch45=0x%x %dd\n", RdBuf->Ch45Buf[0],RdBuf->Ch45Buf[0]);
-                    printf("%s", tempStr);
-                    strBuf.sprintf("%s", tempStr);
-                    ui->ChVal_4->setText(strBuf);
-                    ui->ChVal_5->setText("");
+                    Ch = Chn45;
+                    dataPtr = ChConfig[Ch].RdBufPtr;
+                    numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                    if (numSamples)
+                    {
+                        strBuf.sprintf("%s=0x%x %dd %dx",
+                                ChConfig[Ch].chNameStr,
+                                dataPtr[0],
+                                dataPtr[0],
+                                numSamples);
+
+                        ui->ChVal_4->setText(strBuf);
+                        ui->ChVal_5->setText("");
+                        qDebug() << strBuf;
+
+                        if (ui->log_Ch_4->isChecked() || ui->log_Ch_5->isChecked())
+                        {
+                            filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                            PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                        }
+                    }
                 }
                 else
                 {
                     if (ui->Ch4->isChecked())
                     {
-                        numSamples = PrvGetSamples(Chn4, RdBuf->Ch4Buf, &overun);
-                        sprintf(tempStr, "Ch4=0x%x %dd\n", RdBuf->Ch4Buf[0],RdBuf->Ch4Buf[0]);
-                        printf("%s", tempStr);
-                        strBuf.sprintf("%s", tempStr);
-                        ui->ChVal_4->setText(strBuf);
+                        Ch = Chn4;
+                        dataPtr = ChConfig[Ch].RdBufPtr;
+                        numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                        if (numSamples)
+                        {
+                            strBuf.sprintf("%s=0x%x %dd %dx",
+                                    ChConfig[Ch].chNameStr,
+                                    dataPtr[0],
+                                    dataPtr[0],
+                                    numSamples);
+
+                            ui->ChVal_4->setText(strBuf);
+                            qDebug() << strBuf;
+
+                            if (ui->log_Ch_4->isChecked())
+                            {
+                                filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                                PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                            }
+                        }
                     }
 
                     if (ui->Ch5->isChecked())
                     {
-                        numSamples = PrvGetSamples(Chn5, RdBuf->Ch5Buf, &overun);
-                        sprintf(tempStr, "Ch5=0x%x %dd\n", RdBuf->Ch5Buf[0],RdBuf->Ch5Buf[0]);
-                        printf("%s", tempStr);
-                        strBuf.sprintf("%s", tempStr);
-                        ui->ChVal_5->setText(strBuf);
+                        Ch = Chn5;
+                        dataPtr = ChConfig[Ch].RdBufPtr;
+                        numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                        if (numSamples)
+                        {
+                            strBuf.sprintf("%s=0x%x %dd %dx",
+                                    ChConfig[Ch].chNameStr,
+                                    dataPtr[0],
+                                    dataPtr[0],
+                                    numSamples);
+
+                            ui->ChVal_5->setText(strBuf);
+                            qDebug() << strBuf;
+
+                            if (ui->log_Ch_5->isChecked())
+                            {
+                                filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                                PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                            }
+                        }
                     }
                 }
 
 
                 if (ui->Ch67->isChecked())
                 {
-                    numSamples = PrvGetSamples(Chn67, RdBuf->Ch67Buf, &overun);
-                    sprintf(tempStr, "Ch67=0x%x %dd\n", RdBuf->Ch67Buf[0],RdBuf->Ch67Buf[0]);
-                    printf("%s", tempStr);
-                    strBuf.sprintf("%s", tempStr);
-                    ui->ChVal_6->setText(strBuf);
-                    ui->ChVal_7->setText("");
+                    Ch = Chn67;
+                    dataPtr = ChConfig[Ch].RdBufPtr;
+                    numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                    if (numSamples)
+                    {
+                        strBuf.sprintf("%s=0x%x %dd %dx",
+                                ChConfig[Ch].chNameStr,
+                                dataPtr[0],
+                                dataPtr[0],
+                                numSamples);
+
+                        ui->ChVal_6->setText(strBuf);
+                        ui->ChVal_7->setText("");
+                        qDebug() << strBuf;
+
+                        if (ui->log_Ch_6->isChecked() || ui->log_Ch_7->isChecked())
+                        {
+                            filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                            PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                        }
+                    }
                 }
                 else
                 {
                     if (ui->Ch6->isChecked())
                     {
-                        numSamples = PrvGetSamples(Chn6, RdBuf->Ch6Buf, &overun);
-                        sprintf(tempStr, "Ch6=0x%x %dd\n", RdBuf->Ch6Buf[0],RdBuf->Ch6Buf[0]);
-                        printf("%s", tempStr);
-                        strBuf.sprintf("%s", tempStr);
-                        ui->ChVal_6->setText(strBuf);
+                        Ch = Chn6;
+                        dataPtr = ChConfig[Ch].RdBufPtr;
+                        numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                        if (numSamples)
+                        {
+                            strBuf.sprintf("%s=0x%x %dd %dx",
+                                    ChConfig[Ch].chNameStr,
+                                    dataPtr[0],
+                                    dataPtr[0],
+                                    numSamples);
+
+                            ui->ChVal_6->setText(strBuf);
+                            qDebug() << strBuf;
+
+                            if (ui->log_Ch_6->isChecked())
+                            {
+                                filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                                PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                            }
+                        }
                     }
 
                     if (ui->Ch7->isChecked())
                     {
-                        numSamples = PrvGetSamples(Chn7, RdBuf->Ch7Buf, &overun);
-                        sprintf(tempStr, "Ch7=0x%x %dd\n", RdBuf->Ch7Buf[0],RdBuf->Ch7Buf[0]);
-                        printf("%s", tempStr);
-                        strBuf.sprintf("%s", tempStr);
-                        ui->ChVal_7->setText(strBuf);
+                        Ch = Chn7;
+                        dataPtr = ChConfig[Ch].RdBufPtr;
+                        numSamples = PrvGetSamples(Ch, dataPtr, &overun);
+                        if (numSamples)
+                        {
+                            strBuf.sprintf("%s=0x%x %dd %dx",
+                                    ChConfig[Ch].chNameStr,
+                                    dataPtr[0],
+                                    dataPtr[0],
+                                    numSamples);
+
+                            ui->ChVal_7->setText(strBuf);
+                            qDebug() << strBuf;
+
+                            if (ui->log_Ch_7->isChecked())
+                            {
+                                filename.sprintf("%s/%s", StoreDir, ChConfig[Ch].filename);
+                                PrvWriteSamplesToFile(Ch, filename, dataPtr, numSamples, overun);
+                            }
+                        }
                     }
                 }
             }
@@ -676,104 +1034,100 @@ void MainWindow::on_timer_event()
         }
     }
     fflush(stdout);
+
+    // Update the shown time every minute
+    if (QTime::currentTime().minute() > minutes)
+    {
+        ui->dateTimeEdit->setDateTime(QDateTime::currentDateTime());
+        minutes=QTime::currentTime().minute();
+    }
 }
 
-//void MainWindow::on_up_clicked()
-void MainWindow::on_up_pressed()
+void MainWindow::on_dateTimeEdit_dateTimeChanged(const QDateTime &dateTime)
 {
-    int chSelected;
+    QTextStream  str(&strBuf);
+    str << "date -s " << dateTime.toString("MMddhhmmyyyy") << endl;
+    qDebug() << strBuf.toStdString().c_str();
+    system(strBuf.toStdString().c_str());
+    system("hwclock -w");
+}
 
-    if (ui->ch0_radio->isChecked())         chSelected=0;
-    else if (ui->ch1_radio->isChecked())    chSelected=1;
-    else if (ui->ch2_radio->isChecked())    chSelected=2;
-    else if (ui->ch3_radio->isChecked())    chSelected=3;
-    else if (ui->ch4_radio->isChecked())    chSelected=4;
-    else if (ui->ch5_radio->isChecked())    chSelected=5;
-    else if (ui->ch6_radio->isChecked())    chSelected=6;
-    else if (ui->ch7_radio->isChecked())    chSelected=7;
 
-    samrate_vals[chSelected]+=10;
-    strBuf.sprintf("Ch%d sampling %lu usec", chSelected, samrate_vals[chSelected]);
-    ui->status->setText(strBuf);
 
-    strBuf.sprintf("%lu", samrate_vals[chSelected]);
-    switch (chSelected)
+void MainWindow::on_checkBox_5V10V_clicked()
+{
+    QCheckBox *checkBox = (QCheckBox*) sender();
+    QCheckBox *H5, *L5, *H10, *L10;
+    QString name = checkBox->objectName();
+
+    L5 = ui->checkBox_5V_Ch_0;
+    H5 = ui->checkBox_5V_Ch_1;
+    L10 = ui->checkBox_10V_Ch_0;
+    H10 = ui->checkBox_10V_Ch_1;
+    if (name == L5->objectName())   L10->setChecked (!(L5->isChecked()));
+    if (name == H5->objectName())   H10->setChecked (!(H5->isChecked()));
+    if (name == L10->objectName())  L5->setChecked  (!(L10->isChecked()));
+    if (name == H10->objectName())  H5->setChecked  (!(H10->isChecked()));
+    if (ui->Ch01->isChecked())
     {
-    case 0:
-        ui->ch0_samrate->setText(strBuf);
-        break;
-    case 1:
-        ui->ch1_samrate->setText(strBuf);
-        break;
-    case 2:
-        ui->ch2_samrate->setText(strBuf);
-        break;
-    case 3:
-        ui->ch3_samrate->setText(strBuf);
-        break;
-    case 4:
-        ui->ch4_samrate->setText(strBuf);
-        break;
-    case 5:
-        ui->ch5_samrate->setText(strBuf);
-        break;
-    case 6:
-        ui->ch6_samrate->setText(strBuf);
-        break;
-    case 7:
-        ui->ch7_samrate->setText(strBuf);
-        break;
+        H5->setChecked(L5->isChecked());
+        H10->setChecked(L10->isChecked());
     }
 
-    RESET_STATUS_TIMER;
-}
-
-void MainWindow::on_down_clicked()
-{
-    int chSelected;
-
-    if (ui->ch0_radio->isChecked())         chSelected=0;
-    else if (ui->ch1_radio->isChecked())    chSelected=1;
-    else if (ui->ch2_radio->isChecked())    chSelected=2;
-    else if (ui->ch3_radio->isChecked())    chSelected=3;
-    else if (ui->ch4_radio->isChecked())    chSelected=4;
-    else if (ui->ch5_radio->isChecked())    chSelected=5;
-    else if (ui->ch6_radio->isChecked())    chSelected=6;
-    else if (ui->ch7_radio->isChecked())    chSelected=7;
-
-    samrate_vals[chSelected]-= 10;
-    strBuf.sprintf("Ch%d sampling %lu usec", chSelected, samrate_vals[chSelected]);
-    ui->status->setText(strBuf);
-
-    strBuf.sprintf("%lu", samrate_vals[chSelected]);
-    switch (chSelected)
+    L5 = ui->checkBox_5V_Ch_0;
+    H5 = ui->checkBox_5V_Ch_1;
+    L10 = ui->checkBox_10V_Ch_0;
+    H10 = ui->checkBox_10V_Ch_1;
+    if (name == L5->objectName())   L10->setChecked (!(L5->isChecked()));
+    if (name == H5->objectName())   H10->setChecked (!(H5->isChecked()));
+    if (name == L10->objectName())  L5->setChecked  (!(L10->isChecked()));
+    if (name == H10->objectName())  H5->setChecked  (!(H10->isChecked()));
+    if (ui->Ch01->isChecked())
     {
-    case 0:
-        ui->ch0_samrate->setText(strBuf);
-        break;
-    case 1:
-        ui->ch1_samrate->setText(strBuf);
-        break;
-    case 2:
-        ui->ch2_samrate->setText(strBuf);
-        break;
-    case 3:
-        ui->ch3_samrate->setText(strBuf);
-        break;
-    case 4:
-        ui->ch4_samrate->setText(strBuf);
-        break;
-    case 5:
-        ui->ch5_samrate->setText(strBuf);
-        break;
-    case 6:
-        ui->ch6_samrate->setText(strBuf);
-        break;
-    case 7:
-        ui->ch7_samrate->setText(strBuf);
-        break;
+        H5->setChecked(L5->isChecked());
+        H10->setChecked(L10->isChecked());
     }
 
-    RESET_STATUS_TIMER;
-}
+    L5 = ui->checkBox_5V_Ch_2;
+    H5 = ui->checkBox_5V_Ch_3;
+    L10 = ui->checkBox_10V_Ch_2;
+    H10 = ui->checkBox_10V_Ch_3;
+    if (name == L5->objectName())   L10->setChecked (!(L5->isChecked()));
+    if (name == H5->objectName())   H10->setChecked (!(H5->isChecked()));
+    if (name == L10->objectName())  L5->setChecked  (!(L10->isChecked()));
+    if (name == H10->objectName())  H5->setChecked  (!(H10->isChecked()));
+    if (ui->Ch23->isChecked())
+    {
+        H5->setChecked(L5->isChecked());
+        H10->setChecked(L10->isChecked());
+    }
 
+    L5 = ui->checkBox_5V_Ch_4;
+    H5 = ui->checkBox_5V_Ch_5;
+    L10 = ui->checkBox_10V_Ch_4;
+    H10 = ui->checkBox_10V_Ch_5;
+    if (name == L5->objectName())   L10->setChecked (!(L5->isChecked()));
+    if (name == H5->objectName())   H10->setChecked (!(H5->isChecked()));
+    if (name == L10->objectName())  L5->setChecked  (!(L10->isChecked()));
+    if (name == H10->objectName())  H5->setChecked  (!(H10->isChecked()));
+    if (ui->Ch45->isChecked())
+    {
+        H5->setChecked(L5->isChecked());
+        H10->setChecked(L10->isChecked());
+    }
+
+    L5 = ui->checkBox_5V_Ch_6;
+    H5 = ui->checkBox_5V_Ch_7;
+    L10 = ui->checkBox_10V_Ch_6;
+    H10 = ui->checkBox_10V_Ch_7;
+    if (name == L5->objectName())   L10->setChecked (!(L5->isChecked()));
+    if (name == H5->objectName())   H10->setChecked (!(H5->isChecked()));
+    if (name == L10->objectName())  L5->setChecked  (!(L10->isChecked()));
+    if (name == H10->objectName())  H5->setChecked  (!(H10->isChecked()));
+    if (ui->Ch67->isChecked())
+    {
+        H5->setChecked(L5->isChecked());
+        H10->setChecked(L10->isChecked());
+    }
+
+}

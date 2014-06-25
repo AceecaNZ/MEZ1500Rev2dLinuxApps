@@ -25,7 +25,8 @@ HEADERS  += mainwindow.h\
         adc1.h\
         /opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/drivers/char/MEZ1500_mzio_ltc185x.h\
     keyboard/keyboard.h \
-    keyboard/ui_keyboard.h
+    keyboard/ui_keyboard.h \
+    ui_keyboard.h
 
 FORMS    += mainwindow.ui \
     keyboard/keyboard.ui

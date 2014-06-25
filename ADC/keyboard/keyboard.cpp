@@ -134,6 +134,7 @@ void Keyboard::keyboardHandler()
 void Keyboard::setLineEdit(QLineEdit * line)
 {
     outputLineEdit = line;
+    ui->lineEdit->setText(outputLineEdit->text());
 }
 
 Keyboard::~Keyboard()
