@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'keyboard.ui'
 **
-** Created: Thu Jun 19 16:22:21 2014
+** Created: Wed Jun 25 16:08:12 2014
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -80,6 +80,7 @@ public:
         sizePolicy.setHeightForWidth(Keyboard->sizePolicy().hasHeightForWidth());
         Keyboard->setSizePolicy(sizePolicy);
         Keyboard->setWindowTitle(QString::fromUtf8("Keyboard"));
+        Keyboard->setWindowOpacity(1);
         Keyboard->setStyleSheet(QString::fromUtf8(""));
         lineEdit = new QLineEdit(Keyboard);
         lineEdit->setObjectName(QString::fromUtf8("lineEdit"));

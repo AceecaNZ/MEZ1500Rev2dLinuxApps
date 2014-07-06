@@ -22,6 +22,9 @@
   <property name="windowTitle">
    <string notr="true">Keyboard</string>
   </property>
+  <property name="windowOpacity">
+   <double>1.000000000000000</double>
+  </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>

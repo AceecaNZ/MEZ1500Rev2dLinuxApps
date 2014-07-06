@@ -6,7 +6,7 @@
 #include "keyboard/keyboard.h"
 #include "/opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/drivers/char/MEZ1500_mzio_ltc185x.h"
 
-#define ChMaxReadSamples 500
+#define ChMaxReadSamples 51000
 #define sampleSize sizeof(short)
 
 #define StoreDir    "/sdcard"
@@ -23,6 +23,11 @@
 #define CH7File     "Ch7.csv"
 #define CH67File    "Ch67.csv"
 
+// Sample rate range
+#define samRateFieldMin 1
+#define samRateFieldMax 10000
+#define samRateUSecsMin 1000
+
 // Period Combobox index definition
 #define indexDays       0
 #define indexHours      1
@@ -33,8 +38,8 @@
 
 const unsigned long long periodMicroSecondsMultiplier[6] =
 {
-    86400000000,  // days
-    3600000000,   // hours
+    86400000000LL,  // days
+    3600000000LL,   // hours
     60000000,     // minutes
     1000000,      // seconds
     1000,         // milliseconds
@@ -44,9 +49,12 @@ const unsigned long long periodMicroSecondsMultiplier[6] =
 typedef struct {
   char                  filename[10];
   char                  chNameStr[10];
+  char									unipolar;				// 1=0-X, 0=-X to + X
+  char									v5;							// If 1=5V range, 0=10V range
   unsigned short        *RdBufPtr;
   unsigned long long    periodMicroSecs;
   unsigned long long    periodCounter;
+  unsigned int          multiplier;
 } ChConfigType;
 
 
@@ -96,15 +104,27 @@ private slots:
 
     void run_keyboard_lineEdit();
 
+    QString* PrvGetChStr(int Ch, QString* chStr);
+
+    unsigned long long PrvGetLineEditValue(int Ch);
+
     int PrvGetSamples(int Ch, unsigned short* buf, unsigned int *overun);
 
     int PrvSetChannelConfig(int Ch, unsigned int config, unsigned long long period);
 
     int PrvWriteSamplesToFile(int ch, QString file, unsigned short* buf, int numSamples, int overun);
 
+    int PrvCalculateMultiplier(int V5, int unipolar);
+
+    int PrvCalculate_mV(int Ch, int data);
+
     void on_dateTimeEdit_dateTimeChanged(const QDateTime &dateTime);
 
     void on_checkBox_5V10V_clicked();
+
+    void on_samrate_editingFinished();
+
+    void on_Setup_currentChanged(int index);
 
 private:
     Ui::MainWindow *ui;

@@ -27,7 +27,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QTabWidget" name="Setup">
+   <widget class="QTabWidget" name="TabDisplay">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -40,7 +40,7 @@
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -307,6 +307,9 @@
       <property name="text">
        <string/>
       </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
      </widget>
      <widget class="QLineEdit" name="ch5_samrate">
       <property name="geometry">
@@ -339,7 +342,7 @@
        <rect>
         <x>100</x>
         <y>20</y>
-        <width>81</width>
+        <width>61</width>
         <height>21</height>
        </rect>
       </property>
@@ -358,12 +361,12 @@
       </item>
       <item>
        <property name="text">
-        <string>minutes</string>
+        <string>mins</string>
        </property>
       </item>
       <item>
        <property name="text">
-        <string>seconds</string>
+        <string>secs</string>
        </property>
       </item>
       <item>
@@ -390,307 +393,6 @@
        <string>Period</string>
       </property>
      </widget>
-     <widget class="QComboBox" name="periodBox_1">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>40</y>
-        <width>81</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="currentIndex">
-       <number>3</number>
-      </property>
-      <item>
-       <property name="text">
-        <string>days</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>hours</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>minutes</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>seconds</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>msecs</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>usecs</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QComboBox" name="periodBox_2">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>60</y>
-        <width>81</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="currentIndex">
-       <number>3</number>
-      </property>
-      <item>
-       <property name="text">
-        <string>days</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>hours</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>minutes</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>seconds</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>msecs</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>usecs</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QComboBox" name="periodBox_3">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>80</y>
-        <width>81</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="currentIndex">
-       <number>3</number>
-      </property>
-      <item>
-       <property name="text">
-        <string>days</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>hours</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>minutes</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>seconds</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>msecs</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>usecs</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QComboBox" name="periodBox_4">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>100</y>
-        <width>81</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="currentIndex">
-       <number>3</number>
-      </property>
-      <item>
-       <property name="text">
-        <string>days</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>hours</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>minutes</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>seconds</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>msecs</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>usecs</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QComboBox" name="periodBox_5">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>120</y>
-        <width>81</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="currentIndex">
-       <number>3</number>
-      </property>
-      <item>
-       <property name="text">
-        <string>days</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>hours</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>minutes</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>seconds</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>msecs</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>usecs</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QComboBox" name="periodBox_6">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>140</y>
-        <width>81</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="currentIndex">
-       <number>3</number>
-      </property>
-      <item>
-       <property name="text">
-        <string>days</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>hours</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>minutes</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>seconds</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>msecs</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>usecs</string>
-       </property>
-      </item>
-     </widget>
-     <widget class="QComboBox" name="periodBox_7">
-      <property name="geometry">
-       <rect>
-        <x>100</x>
-        <y>160</y>
-        <width>81</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="currentIndex">
-       <number>3</number>
-      </property>
-      <item>
-       <property name="text">
-        <string>days</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>hours</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>minutes</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>seconds</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>msecs</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>usecs</string>
-       </property>
-      </item>
-     </widget>
      <widget class="QLabel" name="label_4">
       <property name="geometry">
        <rect>
@@ -707,7 +409,7 @@
      <widget class="QLabel" name="label_5">
       <property name="geometry">
        <rect>
-        <x>184</x>
+        <x>190</x>
         <y>0</y>
         <width>51</width>
         <height>20</height>
@@ -997,6 +699,472 @@
        <bool>false</bool>
       </property>
      </widget>
+     <widget class="QComboBox" name="periodBox_1">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>40</y>
+        <width>61</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>days</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>hours</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>mins</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>secs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>msecs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>usecs</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="periodBox_2">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>60</y>
+        <width>61</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>days</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>hours</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>mins</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>secs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>msecs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>usecs</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="periodBox_3">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>80</y>
+        <width>61</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>days</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>hours</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>mins</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>secs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>msecs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>usecs</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="periodBox_4">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>100</y>
+        <width>61</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>days</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>hours</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>mins</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>secs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>msecs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>usecs</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="periodBox_5">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>120</y>
+        <width>61</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>days</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>hours</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>mins</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>secs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>msecs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>usecs</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="periodBox_6">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>140</y>
+        <width>61</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>days</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>hours</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>mins</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>secs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>msecs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>usecs</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QComboBox" name="periodBox_7">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>160</y>
+        <width>61</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>3</number>
+      </property>
+      <item>
+       <property name="text">
+        <string>days</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>hours</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>mins</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>secs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>msecs</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>usecs</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>164</x>
+        <y>0</y>
+        <width>31</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Uni</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_uni_Ch_0">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>20</y>
+        <width>16</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_uni_Ch_1">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>40</y>
+        <width>16</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_uni_Ch_2">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>60</y>
+        <width>16</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_uni_Ch_3">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>80</y>
+        <width>16</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_uni_Ch_4">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>100</y>
+        <width>16</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_uni_Ch_5">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>120</y>
+        <width>16</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_uni_Ch_6">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>140</y>
+        <width>16</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="checkBox_uni_Ch_7">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>160</y>
+        <width>16</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+      <property name="autoExclusive">
+       <bool>false</bool>
+      </property>
+     </widget>
      <zorder>ch0_samrate</zorder>
      <zorder>Ch0</zorder>
      <zorder>Ch7</zorder>
@@ -1019,13 +1187,6 @@
      <zorder>ch5_samrate</zorder>
      <zorder>periodBox_0</zorder>
      <zorder>label_3</zorder>
-     <zorder>periodBox_1</zorder>
-     <zorder>periodBox_2</zorder>
-     <zorder>periodBox_3</zorder>
-     <zorder>periodBox_4</zorder>
-     <zorder>periodBox_5</zorder>
-     <zorder>periodBox_6</zorder>
-     <zorder>periodBox_7</zorder>
      <zorder>label_4</zorder>
      <zorder>label_5</zorder>
      <zorder>checkBox_5V_Ch_0</zorder>
@@ -1044,6 +1205,22 @@
      <zorder>checkBox_5V_Ch_6</zorder>
      <zorder>checkBox_10V_Ch_7</zorder>
      <zorder>checkBox_5V_Ch_7</zorder>
+     <zorder>periodBox_1</zorder>
+     <zorder>periodBox_2</zorder>
+     <zorder>periodBox_3</zorder>
+     <zorder>periodBox_4</zorder>
+     <zorder>periodBox_5</zorder>
+     <zorder>periodBox_6</zorder>
+     <zorder>periodBox_7</zorder>
+     <zorder>label_6</zorder>
+     <zorder>checkBox_uni_Ch_0</zorder>
+     <zorder>checkBox_uni_Ch_1</zorder>
+     <zorder>checkBox_uni_Ch_2</zorder>
+     <zorder>checkBox_uni_Ch_3</zorder>
+     <zorder>checkBox_uni_Ch_4</zorder>
+     <zorder>checkBox_uni_Ch_5</zorder>
+     <zorder>checkBox_uni_Ch_6</zorder>
+     <zorder>checkBox_uni_Ch_7</zorder>
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -1166,6 +1343,9 @@
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QCheckBox" name="log_Ch_3">
