@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Wed Jul 2 11:08:20 2014
+** Created: Thu Aug 7 22:40:13 2014
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.6.3)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        4,       // revision
        0,       // classname
        0,    0, // classinfo
-      27,   14, // methods
+      34,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -31,61 +31,74 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      12,   11,   11,   11, 0x08,
-      31,   11,   11,   11, 0x08,
-      49,   11,   11,   11, 0x08,
-      66,   11,   11,   11, 0x08,
-      83,   11,   11,   11, 0x08,
-     100,   11,   11,   11, 0x08,
-     117,   11,   11,   11, 0x08,
-     134,   11,   11,   11, 0x08,
-     151,   11,   11,   11, 0x08,
-     168,   11,   11,   11, 0x08,
-     185,   11,   11,   11, 0x08,
-     203,   11,   11,   11, 0x08,
-     221,   11,   11,   11, 0x08,
-     239,   11,   11,   11, 0x08,
-     257,   11,   11,   11, 0x08,
-     274,   11,   11,   11, 0x08,
-     316,  307,  298,   11, 0x08,
-     364,  361,  342,   11, 0x08,
-     407,  393,  389,   11, 0x08,
-     465,  448,  389,   11, 0x08,
-     544,  514,  389,   11, 0x08,
-     615,  603,  389,   11, 0x08,
-     655,  647,  389,   11, 0x08,
-     689,  680,   11,   11, 0x08,
-     732,   11,   11,   11, 0x08,
-     760,   11,   11,   11, 0x08,
-     795,  789,   11,   11, 0x08,
+      16,   11,   12,   11, 0x08,
+      37,   11,   12,   11, 0x08,
+      58,   11,   11,   11, 0x08,
+      77,   11,   11,   11, 0x08,
+      95,   11,   11,   11, 0x08,
+     120,   11,   11,   11, 0x08,
+     145,   11,   11,   11, 0x08,
+     170,   11,   11,   11, 0x08,
+     195,   11,   11,   11, 0x08,
+     220,   11,   11,   11, 0x08,
+     245,   11,   11,   11, 0x08,
+     270,   11,   11,   11, 0x08,
+     295,   11,   11,   11, 0x08,
+     312,   11,   11,   11, 0x08,
+     354,  345,  336,   11, 0x08,
+     402,  399,  380,   11, 0x08,
+     443,  429,   12,   11, 0x08,
+     492,  475,   12,   11, 0x08,
+     571,  541,   12,   11, 0x08,
+     635,  621,   12,   11, 0x08,
+     675,  667,   12,   11, 0x08,
+     712,  702,   12,   11, 0x08,
+     746,  737,   11,   11, 0x08,
+     789,   11,   11,   11, 0x08,
+     824,  818,   11,   11, 0x08,
+     853,   11,   11,   11, 0x08,
+     876,   11,   11,   11, 0x08,
+     898,   11,   11,   11, 0x08,
+     920,   11,   11,   11, 0x08,
+     942,   11,   11,   11, 0x08,
+     964,   11,   11,   11, 0x08,
+     986,   11,   11,   11, 0x08,
+    1008,   11,   11,   11, 0x08,
+    1030,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0on_Start_clicked()\0"
-    "on_Stop_clicked()\0on_Ch0_clicked()\0"
-    "on_Ch1_clicked()\0on_Ch2_clicked()\0"
-    "on_Ch3_clicked()\0on_Ch4_clicked()\0"
-    "on_Ch5_clicked()\0on_Ch6_clicked()\0"
-    "on_Ch7_clicked()\0on_Ch01_clicked()\0"
-    "on_Ch23_clicked()\0on_Ch45_clicked()\0"
-    "on_Ch67_clicked()\0on_timer_event()\0"
+    "MainWindow\0\0int\0PrvLoadPreferences()\0"
+    "PrvSavePreferences()\0on_Start_clicked()\0"
+    "on_Stop_clicked()\0on_select_ch_0_clicked()\0"
+    "on_select_ch_1_clicked()\0"
+    "on_select_ch_2_clicked()\0"
+    "on_select_ch_3_clicked()\0"
+    "on_select_ch_4_clicked()\0"
+    "on_select_ch_5_clicked()\0"
+    "on_select_ch_6_clicked()\0"
+    "on_select_ch_7_clicked()\0on_timer_event()\0"
     "run_keyboard_lineEdit()\0QString*\0"
     "Ch,chStr\0PrvGetChStr(int,QString*)\0"
-    "unsigned long long\0Ch\0PrvGetLineEditValue(int)\0"
-    "int\0Ch,buf,overun\0"
-    "PrvGetSamples(int,unsigned short*,uint*)\0"
+    "unsigned long long\0Ch\0PrvGetSampleRateValue(int)\0"
+    "Ch,buf,overun\0PrvGetSamples(int,short*,uint*)\0"
     "Ch,config,period\0"
     "PrvSetChannelConfig(int,uint,unsigned long long)\0"
     "ch,file,buf,numSamples,overun\0"
-    "PrvWriteSamplesToFile(int,QString,unsigned short*,int,int)\0"
-    "V5,unipolar\0PrvCalculateMultiplier(int,int)\0"
-    "Ch,data\0PrvCalculate_mV(int,int)\0"
+    "PrvWriteSamplesToFile(int,QString,short*,int,int)\0"
+    "gain,unipolar\0PrvCalculateMultiplier(int,int)\0"
+    "Ch,data\0PrvCalculate_mV(int,short)\0"
+    "Ch,enable\0PrvSetupChannel(int,int)\0"
     "dateTime\0on_dateTimeEdit_dateTimeChanged(QDateTime)\0"
-    "on_checkBox_5V10V_clicked()\0"
     "on_samrate_editingFinished()\0index\0"
     "on_Setup_currentChanged(int)\0"
+    "on_DeleteCSV_clicked()\0on_log_Ch_0_clicked()\0"
+    "on_log_Ch_1_clicked()\0on_log_Ch_2_clicked()\0"
+    "on_log_Ch_3_clicked()\0on_log_Ch_4_clicked()\0"
+    "on_log_Ch_5_clicked()\0on_log_Ch_6_clicked()\0"
+    "on_log_Ch_7_clicked()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -117,43 +130,53 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: on_Start_clicked(); break;
-        case 1: on_Stop_clicked(); break;
-        case 2: on_Ch0_clicked(); break;
-        case 3: on_Ch1_clicked(); break;
-        case 4: on_Ch2_clicked(); break;
-        case 5: on_Ch3_clicked(); break;
-        case 6: on_Ch4_clicked(); break;
-        case 7: on_Ch5_clicked(); break;
-        case 8: on_Ch6_clicked(); break;
-        case 9: on_Ch7_clicked(); break;
-        case 10: on_Ch01_clicked(); break;
-        case 11: on_Ch23_clicked(); break;
-        case 12: on_Ch45_clicked(); break;
-        case 13: on_Ch67_clicked(); break;
-        case 14: on_timer_event(); break;
-        case 15: run_keyboard_lineEdit(); break;
-        case 16: { QString* _r = PrvGetChStr((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString*(*)>(_a[2])));
+        case 0: { int _r = PrvLoadPreferences();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
+        case 1: { int _r = PrvSavePreferences();
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
+        case 2: on_Start_clicked(); break;
+        case 3: on_Stop_clicked(); break;
+        case 4: on_select_ch_0_clicked(); break;
+        case 5: on_select_ch_1_clicked(); break;
+        case 6: on_select_ch_2_clicked(); break;
+        case 7: on_select_ch_3_clicked(); break;
+        case 8: on_select_ch_4_clicked(); break;
+        case 9: on_select_ch_5_clicked(); break;
+        case 10: on_select_ch_6_clicked(); break;
+        case 11: on_select_ch_7_clicked(); break;
+        case 12: on_timer_event(); break;
+        case 13: run_keyboard_lineEdit(); break;
+        case 14: { QString* _r = PrvGetChStr((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString*(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< QString**>(_a[0]) = _r; }  break;
-        case 17: { unsigned long long _r = PrvGetLineEditValue((*reinterpret_cast< int(*)>(_a[1])));
+        case 15: { unsigned long long _r = PrvGetSampleRateValue((*reinterpret_cast< int(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< unsigned long long*>(_a[0]) = _r; }  break;
-        case 18: { int _r = PrvGetSamples((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< unsigned short*(*)>(_a[2])),(*reinterpret_cast< uint*(*)>(_a[3])));
+        case 16: { int _r = PrvGetSamples((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< short*(*)>(_a[2])),(*reinterpret_cast< uint*(*)>(_a[3])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 19: { int _r = PrvSetChannelConfig((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< uint(*)>(_a[2])),(*reinterpret_cast< unsigned long long(*)>(_a[3])));
+        case 17: { int _r = PrvSetChannelConfig((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< uint(*)>(_a[2])),(*reinterpret_cast< unsigned long long(*)>(_a[3])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 20: { int _r = PrvWriteSamplesToFile((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< unsigned short*(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])));
+        case 18: { int _r = PrvWriteSamplesToFile((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< short*(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 21: { int _r = PrvCalculateMultiplier((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])));
+        case 19: { int _r = PrvCalculateMultiplier((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 22: { int _r = PrvCalculate_mV((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])));
+        case 20: { int _r = PrvCalculate_mV((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< short(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
-        case 23: on_dateTimeEdit_dateTimeChanged((*reinterpret_cast< const QDateTime(*)>(_a[1]))); break;
-        case 24: on_checkBox_5V10V_clicked(); break;
-        case 25: on_samrate_editingFinished(); break;
-        case 26: on_Setup_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 21: { int _r = PrvSetupChannel((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])));
+            if (_a[0]) *reinterpret_cast< int*>(_a[0]) = _r; }  break;
+        case 22: on_dateTimeEdit_dateTimeChanged((*reinterpret_cast< const QDateTime(*)>(_a[1]))); break;
+        case 23: on_samrate_editingFinished(); break;
+        case 24: on_Setup_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 25: on_DeleteCSV_clicked(); break;
+        case 26: on_log_Ch_0_clicked(); break;
+        case 27: on_log_Ch_1_clicked(); break;
+        case 28: on_log_Ch_2_clicked(); break;
+        case 29: on_log_Ch_3_clicked(); break;
+        case 30: on_log_Ch_4_clicked(); break;
+        case 31: on_log_Ch_5_clicked(); break;
+        case 32: on_log_Ch_6_clicked(); break;
+        case 33: on_log_Ch_7_clicked(); break;
         default: ;
         }
-        _id -= 27;
+        _id -= 34;
     }
     return _id;
 }

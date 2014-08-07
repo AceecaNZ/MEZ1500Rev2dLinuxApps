@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ADC
 
 target.files = test
-target.path = /root
+target.path = /sdcard
 INSTALLS += target
 
 TEMPLATE = app

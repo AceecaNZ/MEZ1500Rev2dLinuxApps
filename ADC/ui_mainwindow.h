@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Jul 3 16:22:22 2014
+** Created: Thu Aug 7 22:31:31 2014
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -21,8 +21,6 @@
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QMainWindow>
-#include <QtGui/QMenu>
-#include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
 #include <QtGui/QStatusBar>
 #include <QtGui/QTabWidget>
@@ -41,94 +39,72 @@ public:
     QWidget *tab_3;
     QDateTimeEdit *dateTimeEdit;
     QLabel *label_2;
-    QWidget *tab;
-    QCheckBox *Ch0;
-    QCheckBox *Ch7;
-    QCheckBox *Ch4;
-    QCheckBox *Ch3;
-    QCheckBox *Ch5;
-    QLineEdit *ch6_samrate;
-    QCheckBox *Ch1;
-    QCheckBox *Ch45;
-    QLineEdit *ch4_samrate;
-    QLineEdit *ch2_samrate;
-    QCheckBox *Ch67;
-    QLineEdit *ch1_samrate;
-    QCheckBox *Ch6;
-    QCheckBox *Ch2;
-    QLineEdit *ch3_samrate;
-    QCheckBox *Ch01;
-    QLineEdit *ch7_samrate;
-    QCheckBox *Ch23;
-    QLineEdit *ch5_samrate;
-    QLineEdit *ch0_samrate;
-    QComboBox *periodBox_0;
-    QLabel *label_3;
-    QLabel *label_4;
-    QLabel *label_5;
-    QCheckBox *checkBox_5V_Ch_0;
-    QCheckBox *checkBox_10V_Ch_0;
-    QCheckBox *checkBox_10V_Ch_1;
-    QCheckBox *checkBox_5V_Ch_1;
-    QCheckBox *checkBox_10V_Ch_2;
-    QCheckBox *checkBox_5V_Ch_2;
-    QCheckBox *checkBox_10V_Ch_3;
-    QCheckBox *checkBox_5V_Ch_3;
-    QCheckBox *checkBox_10V_Ch_4;
-    QCheckBox *checkBox_5V_Ch_4;
-    QCheckBox *checkBox_10V_Ch_5;
-    QCheckBox *checkBox_5V_Ch_5;
-    QCheckBox *checkBox_10V_Ch_6;
-    QCheckBox *checkBox_5V_Ch_6;
-    QCheckBox *checkBox_10V_Ch_7;
-    QCheckBox *checkBox_5V_Ch_7;
-    QComboBox *periodBox_1;
-    QComboBox *periodBox_2;
-    QComboBox *periodBox_3;
-    QComboBox *periodBox_4;
-    QComboBox *periodBox_5;
-    QComboBox *periodBox_6;
-    QComboBox *periodBox_7;
-    QLabel *label_6;
-    QCheckBox *checkBox_uni_Ch_0;
-    QCheckBox *checkBox_uni_Ch_1;
-    QCheckBox *checkBox_uni_Ch_2;
-    QCheckBox *checkBox_uni_Ch_3;
-    QCheckBox *checkBox_uni_Ch_4;
-    QCheckBox *checkBox_uni_Ch_5;
-    QCheckBox *checkBox_uni_Ch_6;
-    QCheckBox *checkBox_uni_Ch_7;
+    QPushButton *DeleteCSV;
     QWidget *tab_2;
-    QLineEdit *ChVal_0;
-    QLineEdit *ChVal_1;
-    QLineEdit *ChVal_2;
-    QLineEdit *ChVal_3;
-    QLineEdit *ChVal_4;
-    QLineEdit *ChVal_5;
-    QLineEdit *ChVal_6;
-    QLineEdit *ChVal_7;
-    QCheckBox *log_Ch_0;
-    QCheckBox *log_Ch_1;
-    QCheckBox *log_Ch_2;
+    QLineEdit *Value_ch_0;
+    QLineEdit *Value_ch_1;
+    QLineEdit *Value_ch_2;
+    QLineEdit *Value_ch_3;
+    QLineEdit *Value_ch_4;
+    QLineEdit *Value_ch_5;
+    QLineEdit *Value_ch_6;
+    QLineEdit *Value_ch_7;
+    QCheckBox *select_ch_0;
+    QCheckBox *select_ch_1;
+    QCheckBox *select_ch_2;
+    QCheckBox *select_ch_3;
+    QCheckBox *select_ch_4;
+    QCheckBox *select_ch_5;
+    QCheckBox *select_ch_6;
+    QCheckBox *select_ch_7;
+    QLabel *label_12;
     QCheckBox *log_Ch_3;
     QCheckBox *log_Ch_4;
+    QCheckBox *log_Ch_0;
     QCheckBox *log_Ch_5;
-    QCheckBox *log_Ch_6;
-    QCheckBox *log_Ch_7;
     QLabel *label;
-    QWidget *tab_4;
+    QCheckBox *log_Ch_6;
+    QCheckBox *log_Ch_2;
+    QCheckBox *log_Ch_7;
+    QCheckBox *log_Ch_1;
+    QWidget *tab;
+    QLineEdit *samrate_ch_0;
+    QComboBox *periodBox_ch_0;
+    QLabel *label_3;
+    QLineEdit *samrate_ch_1;
+    QLineEdit *samrate_ch_2;
+    QLineEdit *samrate_ch_3;
+    QLineEdit *samrate_ch_4;
+    QLineEdit *samrate_ch_5;
+    QLineEdit *samrate_ch_6;
+    QLineEdit *samrate_ch_7;
+    QComboBox *periodBox_ch_1;
+    QComboBox *periodBox_ch_2;
+    QComboBox *periodBox_ch_3;
+    QComboBox *periodBox_ch_4;
+    QComboBox *periodBox_ch_5;
+    QComboBox *periodBox_ch_6;
+    QComboBox *periodBox_ch_7;
+    QLabel *label_4;
+    QLabel *label_5;
+    QLabel *label_6;
+    QLabel *label_7;
+    QLabel *label_8;
+    QLabel *label_9;
+    QLabel *label_10;
+    QLabel *label_11;
     QPushButton *Start;
     QPushButton *Stop;
-    QMenuBar *menuBar;
-    QMenu *menuMenu;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(240, 320);
+        MainWindow->setWindowModality(Qt::WindowModal);
+        MainWindow->resize(243, 321);
         MainWindow->setCursor(QCursor(Qt::ArrowCursor));
+        MainWindow->setAutoFillBackground(false);
         actionSave_Preferences = new QAction(MainWindow);
         actionSave_Preferences->setObjectName(QString::fromUtf8("actionSave_Preferences"));
         actionOpen_Preferences = new QAction(MainWindow);
@@ -137,10 +113,10 @@ public:
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         status = new QLineEdit(centralWidget);
         status->setObjectName(QString::fromUtf8("status"));
-        status->setGeometry(QRect(10, 0, 221, 23));
+        status->setGeometry(QRect(10, 10, 221, 23));
         TabDisplay = new QTabWidget(centralWidget);
         TabDisplay->setObjectName(QString::fromUtf8("TabDisplay"));
-        TabDisplay->setGeometry(QRect(0, 40, 241, 221));
+        TabDisplay->setGeometry(QRect(1, 40, 240, 231));
         TabDisplay->setTabShape(QTabWidget::Rounded);
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
@@ -150,365 +126,261 @@ public:
         label_2 = new QLabel(tab_3);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(10, 10, 181, 16));
+        QFont font;
+        font.setBold(true);
+        font.setWeight(75);
+        label_2->setFont(font);
+        DeleteCSV = new QPushButton(tab_3);
+        DeleteCSV->setObjectName(QString::fromUtf8("DeleteCSV"));
+        DeleteCSV->setGeometry(QRect(10, 60, 161, 23));
         TabDisplay->addTab(tab_3, QString());
-        tab = new QWidget();
-        tab->setObjectName(QString::fromUtf8("tab"));
-        Ch0 = new QCheckBox(tab);
-        Ch0->setObjectName(QString::fromUtf8("Ch0"));
-        Ch0->setGeometry(QRect(20, 20, 51, 21));
-        Ch7 = new QCheckBox(tab);
-        Ch7->setObjectName(QString::fromUtf8("Ch7"));
-        Ch7->setGeometry(QRect(20, 160, 51, 21));
-        Ch4 = new QCheckBox(tab);
-        Ch4->setObjectName(QString::fromUtf8("Ch4"));
-        Ch4->setGeometry(QRect(20, 100, 51, 21));
-        Ch3 = new QCheckBox(tab);
-        Ch3->setObjectName(QString::fromUtf8("Ch3"));
-        Ch3->setGeometry(QRect(20, 80, 51, 21));
-        Ch5 = new QCheckBox(tab);
-        Ch5->setObjectName(QString::fromUtf8("Ch5"));
-        Ch5->setGeometry(QRect(20, 120, 51, 21));
-        ch6_samrate = new QLineEdit(tab);
-        ch6_samrate->setObjectName(QString::fromUtf8("ch6_samrate"));
-        ch6_samrate->setGeometry(QRect(50, 140, 51, 21));
-        Ch1 = new QCheckBox(tab);
-        Ch1->setObjectName(QString::fromUtf8("Ch1"));
-        Ch1->setGeometry(QRect(20, 40, 51, 21));
-        Ch45 = new QCheckBox(tab);
-        Ch45->setObjectName(QString::fromUtf8("Ch45"));
-        Ch45->setGeometry(QRect(0, 110, 16, 21));
-        ch4_samrate = new QLineEdit(tab);
-        ch4_samrate->setObjectName(QString::fromUtf8("ch4_samrate"));
-        ch4_samrate->setGeometry(QRect(50, 100, 51, 21));
-        ch2_samrate = new QLineEdit(tab);
-        ch2_samrate->setObjectName(QString::fromUtf8("ch2_samrate"));
-        ch2_samrate->setGeometry(QRect(50, 60, 51, 21));
-        Ch67 = new QCheckBox(tab);
-        Ch67->setObjectName(QString::fromUtf8("Ch67"));
-        Ch67->setGeometry(QRect(0, 150, 16, 21));
-        ch1_samrate = new QLineEdit(tab);
-        ch1_samrate->setObjectName(QString::fromUtf8("ch1_samrate"));
-        ch1_samrate->setGeometry(QRect(50, 40, 51, 21));
-        Ch6 = new QCheckBox(tab);
-        Ch6->setObjectName(QString::fromUtf8("Ch6"));
-        Ch6->setGeometry(QRect(20, 140, 51, 21));
-        Ch2 = new QCheckBox(tab);
-        Ch2->setObjectName(QString::fromUtf8("Ch2"));
-        Ch2->setGeometry(QRect(20, 60, 51, 21));
-        ch3_samrate = new QLineEdit(tab);
-        ch3_samrate->setObjectName(QString::fromUtf8("ch3_samrate"));
-        ch3_samrate->setGeometry(QRect(50, 80, 51, 21));
-        Ch01 = new QCheckBox(tab);
-        Ch01->setObjectName(QString::fromUtf8("Ch01"));
-        Ch01->setGeometry(QRect(0, 30, 16, 21));
-        ch7_samrate = new QLineEdit(tab);
-        ch7_samrate->setObjectName(QString::fromUtf8("ch7_samrate"));
-        ch7_samrate->setGeometry(QRect(50, 160, 51, 21));
-        Ch23 = new QCheckBox(tab);
-        Ch23->setObjectName(QString::fromUtf8("Ch23"));
-        Ch23->setGeometry(QRect(0, 70, 16, 21));
-        Ch23->setChecked(true);
-        ch5_samrate = new QLineEdit(tab);
-        ch5_samrate->setObjectName(QString::fromUtf8("ch5_samrate"));
-        ch5_samrate->setGeometry(QRect(50, 120, 51, 21));
-        ch0_samrate = new QLineEdit(tab);
-        ch0_samrate->setObjectName(QString::fromUtf8("ch0_samrate"));
-        ch0_samrate->setGeometry(QRect(50, 20, 51, 21));
-        periodBox_0 = new QComboBox(tab);
-        periodBox_0->setObjectName(QString::fromUtf8("periodBox_0"));
-        periodBox_0->setGeometry(QRect(100, 20, 61, 21));
-        label_3 = new QLabel(tab);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(50, 0, 51, 16));
-        label_4 = new QLabel(tab);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-        label_4->setGeometry(QRect(20, 0, 21, 16));
-        label_5 = new QLabel(tab);
-        label_5->setObjectName(QString::fromUtf8("label_5"));
-        label_5->setGeometry(QRect(190, 0, 51, 20));
-        checkBox_5V_Ch_0 = new QCheckBox(tab);
-        checkBox_5V_Ch_0->setObjectName(QString::fromUtf8("checkBox_5V_Ch_0"));
-        checkBox_5V_Ch_0->setGeometry(QRect(190, 20, 16, 21));
-        checkBox_5V_Ch_0->setChecked(true);
-        checkBox_5V_Ch_0->setAutoExclusive(false);
-        checkBox_10V_Ch_0 = new QCheckBox(tab);
-        checkBox_10V_Ch_0->setObjectName(QString::fromUtf8("checkBox_10V_Ch_0"));
-        checkBox_10V_Ch_0->setGeometry(QRect(210, 20, 16, 21));
-        checkBox_10V_Ch_0->setAutoExclusive(false);
-        checkBox_10V_Ch_1 = new QCheckBox(tab);
-        checkBox_10V_Ch_1->setObjectName(QString::fromUtf8("checkBox_10V_Ch_1"));
-        checkBox_10V_Ch_1->setGeometry(QRect(210, 40, 16, 21));
-        checkBox_10V_Ch_1->setAutoExclusive(false);
-        checkBox_5V_Ch_1 = new QCheckBox(tab);
-        checkBox_5V_Ch_1->setObjectName(QString::fromUtf8("checkBox_5V_Ch_1"));
-        checkBox_5V_Ch_1->setGeometry(QRect(190, 40, 16, 21));
-        checkBox_5V_Ch_1->setChecked(true);
-        checkBox_5V_Ch_1->setAutoExclusive(false);
-        checkBox_10V_Ch_2 = new QCheckBox(tab);
-        checkBox_10V_Ch_2->setObjectName(QString::fromUtf8("checkBox_10V_Ch_2"));
-        checkBox_10V_Ch_2->setGeometry(QRect(210, 60, 16, 21));
-        checkBox_10V_Ch_2->setAutoExclusive(false);
-        checkBox_5V_Ch_2 = new QCheckBox(tab);
-        checkBox_5V_Ch_2->setObjectName(QString::fromUtf8("checkBox_5V_Ch_2"));
-        checkBox_5V_Ch_2->setGeometry(QRect(190, 60, 16, 21));
-        checkBox_5V_Ch_2->setChecked(true);
-        checkBox_5V_Ch_2->setAutoExclusive(false);
-        checkBox_10V_Ch_3 = new QCheckBox(tab);
-        checkBox_10V_Ch_3->setObjectName(QString::fromUtf8("checkBox_10V_Ch_3"));
-        checkBox_10V_Ch_3->setGeometry(QRect(210, 80, 16, 21));
-        checkBox_10V_Ch_3->setAutoExclusive(false);
-        checkBox_5V_Ch_3 = new QCheckBox(tab);
-        checkBox_5V_Ch_3->setObjectName(QString::fromUtf8("checkBox_5V_Ch_3"));
-        checkBox_5V_Ch_3->setGeometry(QRect(190, 80, 16, 21));
-        checkBox_5V_Ch_3->setChecked(true);
-        checkBox_5V_Ch_3->setAutoExclusive(false);
-        checkBox_10V_Ch_4 = new QCheckBox(tab);
-        checkBox_10V_Ch_4->setObjectName(QString::fromUtf8("checkBox_10V_Ch_4"));
-        checkBox_10V_Ch_4->setGeometry(QRect(210, 100, 16, 21));
-        checkBox_10V_Ch_4->setAutoExclusive(false);
-        checkBox_5V_Ch_4 = new QCheckBox(tab);
-        checkBox_5V_Ch_4->setObjectName(QString::fromUtf8("checkBox_5V_Ch_4"));
-        checkBox_5V_Ch_4->setGeometry(QRect(190, 100, 16, 21));
-        checkBox_5V_Ch_4->setChecked(true);
-        checkBox_5V_Ch_4->setAutoExclusive(false);
-        checkBox_10V_Ch_5 = new QCheckBox(tab);
-        checkBox_10V_Ch_5->setObjectName(QString::fromUtf8("checkBox_10V_Ch_5"));
-        checkBox_10V_Ch_5->setGeometry(QRect(210, 120, 16, 21));
-        checkBox_10V_Ch_5->setAutoExclusive(false);
-        checkBox_5V_Ch_5 = new QCheckBox(tab);
-        checkBox_5V_Ch_5->setObjectName(QString::fromUtf8("checkBox_5V_Ch_5"));
-        checkBox_5V_Ch_5->setGeometry(QRect(190, 120, 16, 21));
-        checkBox_5V_Ch_5->setChecked(true);
-        checkBox_5V_Ch_5->setAutoExclusive(false);
-        checkBox_10V_Ch_6 = new QCheckBox(tab);
-        checkBox_10V_Ch_6->setObjectName(QString::fromUtf8("checkBox_10V_Ch_6"));
-        checkBox_10V_Ch_6->setGeometry(QRect(210, 140, 16, 21));
-        checkBox_10V_Ch_6->setAutoExclusive(false);
-        checkBox_5V_Ch_6 = new QCheckBox(tab);
-        checkBox_5V_Ch_6->setObjectName(QString::fromUtf8("checkBox_5V_Ch_6"));
-        checkBox_5V_Ch_6->setGeometry(QRect(190, 140, 16, 21));
-        checkBox_5V_Ch_6->setChecked(true);
-        checkBox_5V_Ch_6->setAutoExclusive(false);
-        checkBox_10V_Ch_7 = new QCheckBox(tab);
-        checkBox_10V_Ch_7->setObjectName(QString::fromUtf8("checkBox_10V_Ch_7"));
-        checkBox_10V_Ch_7->setGeometry(QRect(210, 160, 16, 21));
-        checkBox_10V_Ch_7->setAutoExclusive(false);
-        checkBox_5V_Ch_7 = new QCheckBox(tab);
-        checkBox_5V_Ch_7->setObjectName(QString::fromUtf8("checkBox_5V_Ch_7"));
-        checkBox_5V_Ch_7->setGeometry(QRect(190, 160, 16, 21));
-        checkBox_5V_Ch_7->setChecked(true);
-        checkBox_5V_Ch_7->setAutoExclusive(false);
-        periodBox_1 = new QComboBox(tab);
-        periodBox_1->setObjectName(QString::fromUtf8("periodBox_1"));
-        periodBox_1->setGeometry(QRect(100, 40, 61, 21));
-        periodBox_2 = new QComboBox(tab);
-        periodBox_2->setObjectName(QString::fromUtf8("periodBox_2"));
-        periodBox_2->setGeometry(QRect(100, 60, 61, 21));
-        periodBox_3 = new QComboBox(tab);
-        periodBox_3->setObjectName(QString::fromUtf8("periodBox_3"));
-        periodBox_3->setGeometry(QRect(100, 80, 61, 21));
-        periodBox_4 = new QComboBox(tab);
-        periodBox_4->setObjectName(QString::fromUtf8("periodBox_4"));
-        periodBox_4->setGeometry(QRect(100, 100, 61, 21));
-        periodBox_5 = new QComboBox(tab);
-        periodBox_5->setObjectName(QString::fromUtf8("periodBox_5"));
-        periodBox_5->setGeometry(QRect(100, 120, 61, 21));
-        periodBox_6 = new QComboBox(tab);
-        periodBox_6->setObjectName(QString::fromUtf8("periodBox_6"));
-        periodBox_6->setGeometry(QRect(100, 140, 61, 21));
-        periodBox_7 = new QComboBox(tab);
-        periodBox_7->setObjectName(QString::fromUtf8("periodBox_7"));
-        periodBox_7->setGeometry(QRect(100, 160, 61, 21));
-        label_6 = new QLabel(tab);
-        label_6->setObjectName(QString::fromUtf8("label_6"));
-        label_6->setGeometry(QRect(164, 0, 31, 20));
-        checkBox_uni_Ch_0 = new QCheckBox(tab);
-        checkBox_uni_Ch_0->setObjectName(QString::fromUtf8("checkBox_uni_Ch_0"));
-        checkBox_uni_Ch_0->setGeometry(QRect(170, 20, 16, 21));
-        checkBox_uni_Ch_0->setChecked(true);
-        checkBox_uni_Ch_0->setAutoExclusive(false);
-        checkBox_uni_Ch_1 = new QCheckBox(tab);
-        checkBox_uni_Ch_1->setObjectName(QString::fromUtf8("checkBox_uni_Ch_1"));
-        checkBox_uni_Ch_1->setGeometry(QRect(170, 40, 16, 21));
-        checkBox_uni_Ch_1->setChecked(true);
-        checkBox_uni_Ch_1->setAutoExclusive(false);
-        checkBox_uni_Ch_2 = new QCheckBox(tab);
-        checkBox_uni_Ch_2->setObjectName(QString::fromUtf8("checkBox_uni_Ch_2"));
-        checkBox_uni_Ch_2->setGeometry(QRect(170, 60, 16, 21));
-        checkBox_uni_Ch_2->setChecked(true);
-        checkBox_uni_Ch_2->setAutoExclusive(false);
-        checkBox_uni_Ch_3 = new QCheckBox(tab);
-        checkBox_uni_Ch_3->setObjectName(QString::fromUtf8("checkBox_uni_Ch_3"));
-        checkBox_uni_Ch_3->setGeometry(QRect(170, 80, 16, 21));
-        checkBox_uni_Ch_3->setChecked(true);
-        checkBox_uni_Ch_3->setAutoExclusive(false);
-        checkBox_uni_Ch_4 = new QCheckBox(tab);
-        checkBox_uni_Ch_4->setObjectName(QString::fromUtf8("checkBox_uni_Ch_4"));
-        checkBox_uni_Ch_4->setGeometry(QRect(170, 100, 16, 21));
-        checkBox_uni_Ch_4->setChecked(true);
-        checkBox_uni_Ch_4->setAutoExclusive(false);
-        checkBox_uni_Ch_5 = new QCheckBox(tab);
-        checkBox_uni_Ch_5->setObjectName(QString::fromUtf8("checkBox_uni_Ch_5"));
-        checkBox_uni_Ch_5->setGeometry(QRect(170, 120, 16, 21));
-        checkBox_uni_Ch_5->setChecked(true);
-        checkBox_uni_Ch_5->setAutoExclusive(false);
-        checkBox_uni_Ch_6 = new QCheckBox(tab);
-        checkBox_uni_Ch_6->setObjectName(QString::fromUtf8("checkBox_uni_Ch_6"));
-        checkBox_uni_Ch_6->setGeometry(QRect(170, 140, 16, 21));
-        checkBox_uni_Ch_6->setChecked(true);
-        checkBox_uni_Ch_6->setAutoExclusive(false);
-        checkBox_uni_Ch_7 = new QCheckBox(tab);
-        checkBox_uni_Ch_7->setObjectName(QString::fromUtf8("checkBox_uni_Ch_7"));
-        checkBox_uni_Ch_7->setGeometry(QRect(170, 160, 16, 21));
-        checkBox_uni_Ch_7->setChecked(true);
-        checkBox_uni_Ch_7->setAutoExclusive(false);
-        TabDisplay->addTab(tab, QString());
-        ch0_samrate->raise();
-        Ch0->raise();
-        Ch7->raise();
-        Ch4->raise();
-        Ch3->raise();
-        Ch5->raise();
-        ch6_samrate->raise();
-        Ch1->raise();
-        Ch45->raise();
-        ch4_samrate->raise();
-        ch2_samrate->raise();
-        Ch67->raise();
-        ch1_samrate->raise();
-        Ch6->raise();
-        Ch2->raise();
-        ch3_samrate->raise();
-        Ch01->raise();
-        ch7_samrate->raise();
-        Ch23->raise();
-        ch5_samrate->raise();
-        periodBox_0->raise();
-        label_3->raise();
-        label_4->raise();
-        label_5->raise();
-        checkBox_5V_Ch_0->raise();
-        checkBox_10V_Ch_0->raise();
-        checkBox_10V_Ch_1->raise();
-        checkBox_5V_Ch_1->raise();
-        checkBox_10V_Ch_2->raise();
-        checkBox_5V_Ch_2->raise();
-        checkBox_10V_Ch_3->raise();
-        checkBox_5V_Ch_3->raise();
-        checkBox_10V_Ch_4->raise();
-        checkBox_5V_Ch_4->raise();
-        checkBox_10V_Ch_5->raise();
-        checkBox_5V_Ch_5->raise();
-        checkBox_10V_Ch_6->raise();
-        checkBox_5V_Ch_6->raise();
-        checkBox_10V_Ch_7->raise();
-        checkBox_5V_Ch_7->raise();
-        periodBox_1->raise();
-        periodBox_2->raise();
-        periodBox_3->raise();
-        periodBox_4->raise();
-        periodBox_5->raise();
-        periodBox_6->raise();
-        periodBox_7->raise();
-        label_6->raise();
-        checkBox_uni_Ch_0->raise();
-        checkBox_uni_Ch_1->raise();
-        checkBox_uni_Ch_2->raise();
-        checkBox_uni_Ch_3->raise();
-        checkBox_uni_Ch_4->raise();
-        checkBox_uni_Ch_5->raise();
-        checkBox_uni_Ch_6->raise();
-        checkBox_uni_Ch_7->raise();
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
-        ChVal_0 = new QLineEdit(tab_2);
-        ChVal_0->setObjectName(QString::fromUtf8("ChVal_0"));
-        ChVal_0->setGeometry(QRect(12, 20, 181, 21));
-        ChVal_1 = new QLineEdit(tab_2);
-        ChVal_1->setObjectName(QString::fromUtf8("ChVal_1"));
-        ChVal_1->setGeometry(QRect(12, 40, 181, 21));
-        ChVal_2 = new QLineEdit(tab_2);
-        ChVal_2->setObjectName(QString::fromUtf8("ChVal_2"));
-        ChVal_2->setGeometry(QRect(12, 60, 181, 21));
-        ChVal_3 = new QLineEdit(tab_2);
-        ChVal_3->setObjectName(QString::fromUtf8("ChVal_3"));
-        ChVal_3->setGeometry(QRect(12, 80, 181, 21));
-        ChVal_4 = new QLineEdit(tab_2);
-        ChVal_4->setObjectName(QString::fromUtf8("ChVal_4"));
-        ChVal_4->setGeometry(QRect(12, 100, 181, 21));
-        ChVal_5 = new QLineEdit(tab_2);
-        ChVal_5->setObjectName(QString::fromUtf8("ChVal_5"));
-        ChVal_5->setGeometry(QRect(12, 120, 181, 21));
-        ChVal_6 = new QLineEdit(tab_2);
-        ChVal_6->setObjectName(QString::fromUtf8("ChVal_6"));
-        ChVal_6->setGeometry(QRect(12, 140, 181, 21));
-        ChVal_7 = new QLineEdit(tab_2);
-        ChVal_7->setObjectName(QString::fromUtf8("ChVal_7"));
-        ChVal_7->setGeometry(QRect(12, 160, 181, 21));
-        log_Ch_0 = new QCheckBox(tab_2);
-        log_Ch_0->setObjectName(QString::fromUtf8("log_Ch_0"));
-        log_Ch_0->setGeometry(QRect(210, 20, 16, 21));
-        log_Ch_1 = new QCheckBox(tab_2);
-        log_Ch_1->setObjectName(QString::fromUtf8("log_Ch_1"));
-        log_Ch_1->setGeometry(QRect(210, 40, 16, 21));
-        log_Ch_2 = new QCheckBox(tab_2);
-        log_Ch_2->setObjectName(QString::fromUtf8("log_Ch_2"));
-        log_Ch_2->setGeometry(QRect(210, 60, 16, 21));
-        log_Ch_2->setChecked(true);
+        Value_ch_0 = new QLineEdit(tab_2);
+        Value_ch_0->setObjectName(QString::fromUtf8("Value_ch_0"));
+        Value_ch_0->setGeometry(QRect(80, 30, 101, 21));
+        Value_ch_0->setReadOnly(true);
+        Value_ch_1 = new QLineEdit(tab_2);
+        Value_ch_1->setObjectName(QString::fromUtf8("Value_ch_1"));
+        Value_ch_1->setGeometry(QRect(80, 50, 101, 21));
+        Value_ch_1->setReadOnly(true);
+        Value_ch_2 = new QLineEdit(tab_2);
+        Value_ch_2->setObjectName(QString::fromUtf8("Value_ch_2"));
+        Value_ch_2->setGeometry(QRect(80, 70, 101, 21));
+        Value_ch_2->setReadOnly(true);
+        Value_ch_3 = new QLineEdit(tab_2);
+        Value_ch_3->setObjectName(QString::fromUtf8("Value_ch_3"));
+        Value_ch_3->setGeometry(QRect(80, 90, 101, 21));
+        Value_ch_3->setReadOnly(true);
+        Value_ch_4 = new QLineEdit(tab_2);
+        Value_ch_4->setObjectName(QString::fromUtf8("Value_ch_4"));
+        Value_ch_4->setGeometry(QRect(80, 110, 101, 21));
+        Value_ch_4->setReadOnly(true);
+        Value_ch_5 = new QLineEdit(tab_2);
+        Value_ch_5->setObjectName(QString::fromUtf8("Value_ch_5"));
+        Value_ch_5->setGeometry(QRect(80, 130, 101, 21));
+        Value_ch_5->setReadOnly(true);
+        Value_ch_6 = new QLineEdit(tab_2);
+        Value_ch_6->setObjectName(QString::fromUtf8("Value_ch_6"));
+        Value_ch_6->setGeometry(QRect(80, 150, 101, 21));
+        Value_ch_6->setReadOnly(true);
+        Value_ch_7 = new QLineEdit(tab_2);
+        Value_ch_7->setObjectName(QString::fromUtf8("Value_ch_7"));
+        Value_ch_7->setGeometry(QRect(80, 170, 101, 21));
+        Value_ch_7->setReadOnly(true);
+        select_ch_0 = new QCheckBox(tab_2);
+        select_ch_0->setObjectName(QString::fromUtf8("select_ch_0"));
+        select_ch_0->setGeometry(QRect(20, 30, 51, 21));
+        select_ch_0->setChecked(true);
+        select_ch_1 = new QCheckBox(tab_2);
+        select_ch_1->setObjectName(QString::fromUtf8("select_ch_1"));
+        select_ch_1->setGeometry(QRect(20, 50, 51, 21));
+        select_ch_1->setChecked(true);
+        select_ch_2 = new QCheckBox(tab_2);
+        select_ch_2->setObjectName(QString::fromUtf8("select_ch_2"));
+        select_ch_2->setGeometry(QRect(20, 70, 51, 21));
+        select_ch_2->setChecked(true);
+        select_ch_3 = new QCheckBox(tab_2);
+        select_ch_3->setObjectName(QString::fromUtf8("select_ch_3"));
+        select_ch_3->setGeometry(QRect(20, 90, 51, 21));
+        select_ch_3->setChecked(true);
+        select_ch_4 = new QCheckBox(tab_2);
+        select_ch_4->setObjectName(QString::fromUtf8("select_ch_4"));
+        select_ch_4->setGeometry(QRect(20, 110, 51, 21));
+        select_ch_4->setChecked(true);
+        select_ch_5 = new QCheckBox(tab_2);
+        select_ch_5->setObjectName(QString::fromUtf8("select_ch_5"));
+        select_ch_5->setGeometry(QRect(20, 130, 51, 21));
+        select_ch_5->setChecked(true);
+        select_ch_6 = new QCheckBox(tab_2);
+        select_ch_6->setObjectName(QString::fromUtf8("select_ch_6"));
+        select_ch_6->setGeometry(QRect(20, 150, 51, 21));
+        select_ch_6->setChecked(true);
+        select_ch_7 = new QCheckBox(tab_2);
+        select_ch_7->setObjectName(QString::fromUtf8("select_ch_7"));
+        select_ch_7->setGeometry(QRect(20, 170, 51, 21));
+        select_ch_7->setChecked(true);
+        label_12 = new QLabel(tab_2);
+        label_12->setObjectName(QString::fromUtf8("label_12"));
+        label_12->setGeometry(QRect(20, 10, 57, 15));
+        label_12->setFont(font);
         log_Ch_3 = new QCheckBox(tab_2);
         log_Ch_3->setObjectName(QString::fromUtf8("log_Ch_3"));
-        log_Ch_3->setGeometry(QRect(210, 80, 16, 21));
+        log_Ch_3->setGeometry(QRect(190, 90, 16, 21));
+        log_Ch_3->setChecked(true);
         log_Ch_4 = new QCheckBox(tab_2);
         log_Ch_4->setObjectName(QString::fromUtf8("log_Ch_4"));
-        log_Ch_4->setGeometry(QRect(210, 100, 16, 21));
+        log_Ch_4->setGeometry(QRect(190, 110, 16, 21));
+        log_Ch_4->setChecked(true);
+        log_Ch_0 = new QCheckBox(tab_2);
+        log_Ch_0->setObjectName(QString::fromUtf8("log_Ch_0"));
+        log_Ch_0->setGeometry(QRect(190, 30, 16, 21));
+        log_Ch_0->setChecked(true);
         log_Ch_5 = new QCheckBox(tab_2);
         log_Ch_5->setObjectName(QString::fromUtf8("log_Ch_5"));
-        log_Ch_5->setGeometry(QRect(210, 120, 16, 21));
-        log_Ch_6 = new QCheckBox(tab_2);
-        log_Ch_6->setObjectName(QString::fromUtf8("log_Ch_6"));
-        log_Ch_6->setGeometry(QRect(210, 140, 16, 21));
-        log_Ch_7 = new QCheckBox(tab_2);
-        log_Ch_7->setObjectName(QString::fromUtf8("log_Ch_7"));
-        log_Ch_7->setGeometry(QRect(210, 160, 16, 21));
+        log_Ch_5->setGeometry(QRect(190, 130, 16, 21));
+        log_Ch_5->setChecked(true);
         label = new QLabel(tab_2);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(210, 0, 31, 16));
+        label->setGeometry(QRect(190, 10, 31, 16));
+        label->setFont(font);
+        log_Ch_6 = new QCheckBox(tab_2);
+        log_Ch_6->setObjectName(QString::fromUtf8("log_Ch_6"));
+        log_Ch_6->setGeometry(QRect(190, 150, 16, 21));
+        log_Ch_6->setChecked(true);
+        log_Ch_2 = new QCheckBox(tab_2);
+        log_Ch_2->setObjectName(QString::fromUtf8("log_Ch_2"));
+        log_Ch_2->setGeometry(QRect(190, 70, 16, 21));
+        log_Ch_2->setChecked(true);
+        log_Ch_7 = new QCheckBox(tab_2);
+        log_Ch_7->setObjectName(QString::fromUtf8("log_Ch_7"));
+        log_Ch_7->setGeometry(QRect(190, 170, 16, 21));
+        log_Ch_7->setChecked(true);
+        log_Ch_1 = new QCheckBox(tab_2);
+        log_Ch_1->setObjectName(QString::fromUtf8("log_Ch_1"));
+        log_Ch_1->setGeometry(QRect(190, 50, 16, 21));
+        log_Ch_1->setChecked(true);
         TabDisplay->addTab(tab_2, QString());
-        tab_4 = new QWidget();
-        tab_4->setObjectName(QString::fromUtf8("tab_4"));
-        TabDisplay->addTab(tab_4, QString());
+        tab = new QWidget();
+        tab->setObjectName(QString::fromUtf8("tab"));
+        samrate_ch_0 = new QLineEdit(tab);
+        samrate_ch_0->setObjectName(QString::fromUtf8("samrate_ch_0"));
+        samrate_ch_0->setGeometry(QRect(50, 30, 61, 21));
+        periodBox_ch_0 = new QComboBox(tab);
+        periodBox_ch_0->setObjectName(QString::fromUtf8("periodBox_ch_0"));
+        periodBox_ch_0->setGeometry(QRect(110, 30, 111, 21));
+        periodBox_ch_0->setFrame(true);
+        label_3 = new QLabel(tab);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setGeometry(QRect(50, 10, 121, 16));
+        label_3->setFont(font);
+        samrate_ch_1 = new QLineEdit(tab);
+        samrate_ch_1->setObjectName(QString::fromUtf8("samrate_ch_1"));
+        samrate_ch_1->setGeometry(QRect(50, 50, 61, 21));
+        samrate_ch_2 = new QLineEdit(tab);
+        samrate_ch_2->setObjectName(QString::fromUtf8("samrate_ch_2"));
+        samrate_ch_2->setGeometry(QRect(50, 70, 61, 21));
+        samrate_ch_3 = new QLineEdit(tab);
+        samrate_ch_3->setObjectName(QString::fromUtf8("samrate_ch_3"));
+        samrate_ch_3->setGeometry(QRect(50, 90, 61, 21));
+        samrate_ch_4 = new QLineEdit(tab);
+        samrate_ch_4->setObjectName(QString::fromUtf8("samrate_ch_4"));
+        samrate_ch_4->setGeometry(QRect(50, 110, 61, 21));
+        samrate_ch_5 = new QLineEdit(tab);
+        samrate_ch_5->setObjectName(QString::fromUtf8("samrate_ch_5"));
+        samrate_ch_5->setGeometry(QRect(50, 130, 61, 21));
+        samrate_ch_6 = new QLineEdit(tab);
+        samrate_ch_6->setObjectName(QString::fromUtf8("samrate_ch_6"));
+        samrate_ch_6->setGeometry(QRect(50, 150, 61, 21));
+        samrate_ch_7 = new QLineEdit(tab);
+        samrate_ch_7->setObjectName(QString::fromUtf8("samrate_ch_7"));
+        samrate_ch_7->setGeometry(QRect(50, 170, 61, 21));
+        periodBox_ch_1 = new QComboBox(tab);
+        periodBox_ch_1->setObjectName(QString::fromUtf8("periodBox_ch_1"));
+        periodBox_ch_1->setGeometry(QRect(110, 50, 111, 21));
+        periodBox_ch_1->setFrame(true);
+        periodBox_ch_2 = new QComboBox(tab);
+        periodBox_ch_2->setObjectName(QString::fromUtf8("periodBox_ch_2"));
+        periodBox_ch_2->setGeometry(QRect(110, 70, 111, 21));
+        periodBox_ch_2->setFrame(true);
+        periodBox_ch_3 = new QComboBox(tab);
+        periodBox_ch_3->setObjectName(QString::fromUtf8("periodBox_ch_3"));
+        periodBox_ch_3->setGeometry(QRect(110, 90, 111, 21));
+        periodBox_ch_3->setFrame(true);
+        periodBox_ch_4 = new QComboBox(tab);
+        periodBox_ch_4->setObjectName(QString::fromUtf8("periodBox_ch_4"));
+        periodBox_ch_4->setGeometry(QRect(110, 110, 111, 21));
+        periodBox_ch_4->setFrame(true);
+        periodBox_ch_5 = new QComboBox(tab);
+        periodBox_ch_5->setObjectName(QString::fromUtf8("periodBox_ch_5"));
+        periodBox_ch_5->setGeometry(QRect(110, 130, 111, 21));
+        periodBox_ch_5->setFrame(true);
+        periodBox_ch_6 = new QComboBox(tab);
+        periodBox_ch_6->setObjectName(QString::fromUtf8("periodBox_ch_6"));
+        periodBox_ch_6->setGeometry(QRect(110, 150, 111, 21));
+        periodBox_ch_6->setFrame(true);
+        periodBox_ch_7 = new QComboBox(tab);
+        periodBox_ch_7->setObjectName(QString::fromUtf8("periodBox_ch_7"));
+        periodBox_ch_7->setGeometry(QRect(110, 170, 111, 21));
+        periodBox_ch_7->setFrame(true);
+        label_4 = new QLabel(tab);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setGeometry(QRect(20, 30, 31, 16));
+        label_5 = new QLabel(tab);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+        label_5->setGeometry(QRect(20, 50, 31, 16));
+        label_6 = new QLabel(tab);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setGeometry(QRect(20, 70, 31, 16));
+        label_7 = new QLabel(tab);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+        label_7->setGeometry(QRect(20, 90, 31, 16));
+        label_8 = new QLabel(tab);
+        label_8->setObjectName(QString::fromUtf8("label_8"));
+        label_8->setGeometry(QRect(20, 110, 31, 16));
+        label_9 = new QLabel(tab);
+        label_9->setObjectName(QString::fromUtf8("label_9"));
+        label_9->setGeometry(QRect(20, 130, 31, 16));
+        label_10 = new QLabel(tab);
+        label_10->setObjectName(QString::fromUtf8("label_10"));
+        label_10->setGeometry(QRect(20, 150, 31, 16));
+        label_11 = new QLabel(tab);
+        label_11->setObjectName(QString::fromUtf8("label_11"));
+        label_11->setGeometry(QRect(20, 170, 31, 16));
+        TabDisplay->addTab(tab, QString());
         Start = new QPushButton(centralWidget);
         Start->setObjectName(QString::fromUtf8("Start"));
-        Start->setGeometry(QRect(0, 20, 121, 21));
+        Start->setGeometry(QRect(0, 270, 121, 21));
+        QPalette palette;
+        QBrush brush(QColor(0, 170, 0, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::ButtonText, brush);
+        QBrush brush1(QColor(255, 255, 255, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Base, brush1);
+        palette.setBrush(QPalette::Inactive, QPalette::ButtonText, brush);
+        palette.setBrush(QPalette::Inactive, QPalette::Base, brush1);
+        QBrush brush2(QColor(190, 190, 190, 255));
+        brush2.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Disabled, QPalette::ButtonText, brush2);
+        QBrush brush3(QColor(239, 235, 231, 255));
+        brush3.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Disabled, QPalette::Base, brush3);
+        Start->setPalette(palette);
+        QFont font1;
+        font1.setPointSize(10);
+        font1.setBold(true);
+        font1.setWeight(75);
+        Start->setFont(font1);
+        Start->setAutoFillBackground(true);
         Stop = new QPushButton(centralWidget);
         Stop->setObjectName(QString::fromUtf8("Stop"));
-        Stop->setGeometry(QRect(120, 20, 121, 21));
+        Stop->setGeometry(QRect(120, 270, 121, 21));
+        QPalette palette1;
+        QBrush brush4(QColor(255, 0, 0, 255));
+        brush4.setStyle(Qt::SolidPattern);
+        palette1.setBrush(QPalette::Active, QPalette::ButtonText, brush4);
+        palette1.setBrush(QPalette::Inactive, QPalette::ButtonText, brush4);
+        palette1.setBrush(QPalette::Disabled, QPalette::ButtonText, brush2);
+        Stop->setPalette(palette1);
+        Stop->setFont(font1);
+        Stop->setCheckable(false);
         MainWindow->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(MainWindow);
-        menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 240, 20));
-        menuMenu = new QMenu(menuBar);
-        menuMenu->setObjectName(QString::fromUtf8("menuMenu"));
-        MainWindow->setMenuBar(menuBar);
         statusBar = new QStatusBar(MainWindow);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         MainWindow->setStatusBar(statusBar);
 
-        menuBar->addAction(menuMenu->menuAction());
-        menuMenu->addAction(actionOpen_Preferences);
-        menuMenu->addAction(actionSave_Preferences);
-
         retranslateUi(MainWindow);
 
         TabDisplay->setCurrentIndex(2);
-        periodBox_0->setCurrentIndex(3);
-        periodBox_1->setCurrentIndex(3);
-        periodBox_2->setCurrentIndex(3);
-        periodBox_3->setCurrentIndex(3);
-        periodBox_4->setCurrentIndex(3);
-        periodBox_5->setCurrentIndex(3);
-        periodBox_6->setCurrentIndex(3);
-        periodBox_7->setCurrentIndex(3);
+        periodBox_ch_0->setCurrentIndex(3);
+        periodBox_ch_1->setCurrentIndex(3);
+        periodBox_ch_2->setCurrentIndex(3);
+        periodBox_ch_3->setCurrentIndex(3);
+        periodBox_ch_4->setCurrentIndex(3);
+        periodBox_ch_5->setCurrentIndex(3);
+        periodBox_ch_6->setCurrentIndex(3);
+        periodBox_ch_7->setCurrentIndex(3);
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -516,146 +388,115 @@ public:
 
     void retranslateUi(QMainWindow *MainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "ADC", 0, QApplication::UnicodeUTF8));
+        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "Meazura", 0, QApplication::UnicodeUTF8));
         actionSave_Preferences->setText(QApplication::translate("MainWindow", "Save Preferences", 0, QApplication::UnicodeUTF8));
         actionOpen_Preferences->setText(QApplication::translate("MainWindow", "Open Preferences", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("MainWindow", "Set date and time", 0, QApplication::UnicodeUTF8));
-        TabDisplay->setTabText(TabDisplay->indexOf(tab_3), QApplication::translate("MainWindow", "Time", 0, QApplication::UnicodeUTF8));
-        Ch0->setText(QApplication::translate("MainWindow", "0", 0, QApplication::UnicodeUTF8));
-        Ch7->setText(QApplication::translate("MainWindow", "7", 0, QApplication::UnicodeUTF8));
-        Ch4->setText(QApplication::translate("MainWindow", "4", 0, QApplication::UnicodeUTF8));
-        Ch3->setText(QApplication::translate("MainWindow", "3", 0, QApplication::UnicodeUTF8));
-        Ch5->setText(QApplication::translate("MainWindow", "5", 0, QApplication::UnicodeUTF8));
-        ch6_samrate->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
-        Ch1->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
-        Ch45->setText(QString());
-        ch4_samrate->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
-        ch2_samrate->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
-        Ch67->setText(QString());
-        ch1_samrate->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
-        Ch6->setText(QApplication::translate("MainWindow", "6", 0, QApplication::UnicodeUTF8));
-        Ch2->setText(QApplication::translate("MainWindow", "2", 0, QApplication::UnicodeUTF8));
-        ch3_samrate->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
-        Ch01->setText(QString());
-        ch7_samrate->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
-        Ch23->setText(QString());
-        ch5_samrate->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
-        ch0_samrate->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
-        periodBox_0->clear();
-        periodBox_0->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "mins", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "secs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "msecs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "usecs", 0, QApplication::UnicodeUTF8)
-        );
-        label_3->setText(QApplication::translate("MainWindow", "Period", 0, QApplication::UnicodeUTF8));
-        label_4->setText(QApplication::translate("MainWindow", "Ch", 0, QApplication::UnicodeUTF8));
-        label_5->setText(QApplication::translate("MainWindow", "5V 10V", 0, QApplication::UnicodeUTF8));
-        checkBox_5V_Ch_0->setText(QString());
-        checkBox_10V_Ch_0->setText(QString());
-        checkBox_10V_Ch_1->setText(QString());
-        checkBox_5V_Ch_1->setText(QString());
-        checkBox_10V_Ch_2->setText(QString());
-        checkBox_5V_Ch_2->setText(QString());
-        checkBox_10V_Ch_3->setText(QString());
-        checkBox_5V_Ch_3->setText(QString());
-        checkBox_10V_Ch_4->setText(QString());
-        checkBox_5V_Ch_4->setText(QString());
-        checkBox_10V_Ch_5->setText(QString());
-        checkBox_5V_Ch_5->setText(QString());
-        checkBox_10V_Ch_6->setText(QString());
-        checkBox_5V_Ch_6->setText(QString());
-        checkBox_10V_Ch_7->setText(QString());
-        checkBox_5V_Ch_7->setText(QString());
-        periodBox_1->clear();
-        periodBox_1->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "mins", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "secs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "msecs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "usecs", 0, QApplication::UnicodeUTF8)
-        );
-        periodBox_2->clear();
-        periodBox_2->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "mins", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "secs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "msecs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "usecs", 0, QApplication::UnicodeUTF8)
-        );
-        periodBox_3->clear();
-        periodBox_3->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "mins", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "secs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "msecs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "usecs", 0, QApplication::UnicodeUTF8)
-        );
-        periodBox_4->clear();
-        periodBox_4->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "mins", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "secs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "msecs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "usecs", 0, QApplication::UnicodeUTF8)
-        );
-        periodBox_5->clear();
-        periodBox_5->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "mins", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "secs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "msecs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "usecs", 0, QApplication::UnicodeUTF8)
-        );
-        periodBox_6->clear();
-        periodBox_6->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "mins", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "secs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "msecs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "usecs", 0, QApplication::UnicodeUTF8)
-        );
-        periodBox_7->clear();
-        periodBox_7->insertItems(0, QStringList()
-         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "mins", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "secs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "msecs", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("MainWindow", "usecs", 0, QApplication::UnicodeUTF8)
-        );
-        label_6->setText(QApplication::translate("MainWindow", "Uni", 0, QApplication::UnicodeUTF8));
-        checkBox_uni_Ch_0->setText(QString());
-        checkBox_uni_Ch_1->setText(QString());
-        checkBox_uni_Ch_2->setText(QString());
-        checkBox_uni_Ch_3->setText(QString());
-        checkBox_uni_Ch_4->setText(QString());
-        checkBox_uni_Ch_5->setText(QString());
-        checkBox_uni_Ch_6->setText(QString());
-        checkBox_uni_Ch_7->setText(QString());
-        TabDisplay->setTabText(TabDisplay->indexOf(tab), QApplication::translate("MainWindow", "Channel", 0, QApplication::UnicodeUTF8));
-        log_Ch_0->setText(QString());
-        log_Ch_1->setText(QString());
-        log_Ch_2->setText(QString());
+        DeleteCSV->setText(QApplication::translate("MainWindow", "Delete logged data", 0, QApplication::UnicodeUTF8));
+        TabDisplay->setTabText(TabDisplay->indexOf(tab_3), QApplication::translate("MainWindow", "Setup", 0, QApplication::UnicodeUTF8));
+        select_ch_0->setText(QApplication::translate("MainWindow", "Ch0", 0, QApplication::UnicodeUTF8));
+        select_ch_1->setText(QApplication::translate("MainWindow", "Ch1", 0, QApplication::UnicodeUTF8));
+        select_ch_2->setText(QApplication::translate("MainWindow", "Ch2", 0, QApplication::UnicodeUTF8));
+        select_ch_3->setText(QApplication::translate("MainWindow", "Ch3", 0, QApplication::UnicodeUTF8));
+        select_ch_4->setText(QApplication::translate("MainWindow", "Ch4", 0, QApplication::UnicodeUTF8));
+        select_ch_5->setText(QApplication::translate("MainWindow", "Ch5", 0, QApplication::UnicodeUTF8));
+        select_ch_6->setText(QApplication::translate("MainWindow", "Ch6", 0, QApplication::UnicodeUTF8));
+        select_ch_7->setText(QApplication::translate("MainWindow", "Ch7", 0, QApplication::UnicodeUTF8));
+        label_12->setText(QApplication::translate("MainWindow", "Select", 0, QApplication::UnicodeUTF8));
         log_Ch_3->setText(QString());
         log_Ch_4->setText(QString());
+        log_Ch_0->setText(QString());
         log_Ch_5->setText(QString());
-        log_Ch_6->setText(QString());
-        log_Ch_7->setText(QString());
         label->setText(QApplication::translate("MainWindow", "Log", 0, QApplication::UnicodeUTF8));
-        TabDisplay->setTabText(TabDisplay->indexOf(tab_2), QApplication::translate("MainWindow", "Data", 0, QApplication::UnicodeUTF8));
-        TabDisplay->setTabText(TabDisplay->indexOf(tab_4), QApplication::translate("MainWindow", "Graph", 0, QApplication::UnicodeUTF8));
+        log_Ch_6->setText(QString());
+        log_Ch_2->setText(QString());
+        log_Ch_7->setText(QString());
+        log_Ch_1->setText(QString());
+        TabDisplay->setTabText(TabDisplay->indexOf(tab_2), QApplication::translate("MainWindow", "Channel", 0, QApplication::UnicodeUTF8));
+        samrate_ch_0->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
+        periodBox_ch_0->clear();
+        periodBox_ch_0->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "minutes", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "seconds", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "miliseconds", 0, QApplication::UnicodeUTF8)
+        );
+        label_3->setText(QApplication::translate("MainWindow", "Sampling Period", 0, QApplication::UnicodeUTF8));
+        samrate_ch_1->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
+        samrate_ch_2->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
+        samrate_ch_3->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
+        samrate_ch_4->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
+        samrate_ch_5->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
+        samrate_ch_6->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
+        samrate_ch_7->setText(QApplication::translate("MainWindow", "1", 0, QApplication::UnicodeUTF8));
+        periodBox_ch_1->clear();
+        periodBox_ch_1->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "minutes", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "seconds", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "miliseconds", 0, QApplication::UnicodeUTF8)
+        );
+        periodBox_ch_2->clear();
+        periodBox_ch_2->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "minutes", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "seconds", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "miliseconds", 0, QApplication::UnicodeUTF8)
+        );
+        periodBox_ch_3->clear();
+        periodBox_ch_3->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "minutes", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "seconds", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "miliseconds", 0, QApplication::UnicodeUTF8)
+        );
+        periodBox_ch_4->clear();
+        periodBox_ch_4->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "minutes", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "seconds", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "miliseconds", 0, QApplication::UnicodeUTF8)
+        );
+        periodBox_ch_5->clear();
+        periodBox_ch_5->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "minutes", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "seconds", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "miliseconds", 0, QApplication::UnicodeUTF8)
+        );
+        periodBox_ch_6->clear();
+        periodBox_ch_6->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "minutes", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "seconds", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "miliseconds", 0, QApplication::UnicodeUTF8)
+        );
+        periodBox_ch_7->clear();
+        periodBox_ch_7->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "days", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "hours", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "minutes", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "seconds", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "miliseconds", 0, QApplication::UnicodeUTF8)
+        );
+        label_4->setText(QApplication::translate("MainWindow", "Ch0", 0, QApplication::UnicodeUTF8));
+        label_5->setText(QApplication::translate("MainWindow", "Ch1", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("MainWindow", "Ch2", 0, QApplication::UnicodeUTF8));
+        label_7->setText(QApplication::translate("MainWindow", "Ch3", 0, QApplication::UnicodeUTF8));
+        label_8->setText(QApplication::translate("MainWindow", "Ch4", 0, QApplication::UnicodeUTF8));
+        label_9->setText(QApplication::translate("MainWindow", "Ch5", 0, QApplication::UnicodeUTF8));
+        label_10->setText(QApplication::translate("MainWindow", "Ch6", 0, QApplication::UnicodeUTF8));
+        label_11->setText(QApplication::translate("MainWindow", "Ch7", 0, QApplication::UnicodeUTF8));
+        TabDisplay->setTabText(TabDisplay->indexOf(tab), QApplication::translate("MainWindow", "Period", 0, QApplication::UnicodeUTF8));
         Start->setText(QApplication::translate("MainWindow", "Start", 0, QApplication::UnicodeUTF8));
         Stop->setText(QApplication::translate("MainWindow", "Stop", 0, QApplication::UnicodeUTF8));
-        menuMenu->setTitle(QApplication::translate("MainWindow", "Menu", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

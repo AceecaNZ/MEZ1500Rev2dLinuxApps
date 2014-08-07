@@ -22,11 +22,14 @@
 #define CH6File     "Ch6.csv"
 #define CH7File     "Ch7.csv"
 #define CH67File    "Ch67.csv"
+#define AppPrefsFile "ADC_prefs.xml"
+
 
 // Sample rate range
 #define samRateFieldMin 1
 #define samRateFieldMax 10000
-#define samRateUSecsMin 1000
+//#define samRateUSecsMin 1000
+#define samRateMSecsMin 250
 
 // Period Combobox index definition
 #define indexDays       0
@@ -34,7 +37,7 @@
 #define indexMinutes    2
 #define indexSeconds    3
 #define indexMSeconds   4
-#define indexUSeconds   5
+//#define indexUSeconds   5
 
 const unsigned long long periodMicroSecondsMultiplier[6] =
 {
@@ -49,15 +52,20 @@ const unsigned long long periodMicroSecondsMultiplier[6] =
 typedef struct {
   char                  filename[10];
   char                  chNameStr[10];
-  char									unipolar;				// 1=0-X, 0=-X to + X
-  char									v5;							// If 1=5V range, 0=10V range
-  unsigned short        *RdBufPtr;
+  short                 *RdBufPtr;
   unsigned long long    periodMicroSecs;
   unsigned long long    periodCounter;
   unsigned int          multiplier;
+  QDateTime             chStartTime;
+
+  // Saved in prefs file
+  int                   enabled;
+  int                   samplePeriodUnitIndex;
+  int                   samplePeriodValue;
+  int                   doLog;
+  int					unipolar;				// 1=0-X, 0=-X to + X
+  int					gain;					// If 0=5V range, 1=10V range
 } ChConfigType;
-
-
 
 namespace Ui {
 class MainWindow;
@@ -72,33 +80,29 @@ public:
     ~MainWindow();
     
 private slots:
+    int PrvLoadPreferences();
+    int PrvSavePreferences();
+
     void on_Start_clicked();
 
     void on_Stop_clicked();
 
-    void on_Ch0_clicked();
+    void on_select_ch_0_clicked();
 
-    void on_Ch1_clicked();
+    void on_select_ch_1_clicked();
 
-    void on_Ch2_clicked();
+    void on_select_ch_2_clicked();
 
-    void on_Ch3_clicked();
+    void on_select_ch_3_clicked();
 
-    void on_Ch4_clicked();
+    void on_select_ch_4_clicked();
 
-    void on_Ch5_clicked();
+    void on_select_ch_5_clicked();
 
-    void on_Ch6_clicked();
+    void on_select_ch_6_clicked();
 
-    void on_Ch7_clicked();
+    void on_select_ch_7_clicked();
 
-    void on_Ch01_clicked();
-
-    void on_Ch23_clicked();
-
-    void on_Ch45_clicked();
-
-    void on_Ch67_clicked();
 
     void on_timer_event();
 
@@ -106,25 +110,44 @@ private slots:
 
     QString* PrvGetChStr(int Ch, QString* chStr);
 
-    unsigned long long PrvGetLineEditValue(int Ch);
+    unsigned long long PrvGetSampleRateValue(int Ch);
 
-    int PrvGetSamples(int Ch, unsigned short* buf, unsigned int *overun);
+    int PrvGetSamples(int Ch, short *buf, unsigned int *overun);
 
     int PrvSetChannelConfig(int Ch, unsigned int config, unsigned long long period);
 
-    int PrvWriteSamplesToFile(int ch, QString file, unsigned short* buf, int numSamples, int overun);
+    int PrvWriteSamplesToFile(int ch, QString file, short* buf, int numSamples, int overun);
 
-    int PrvCalculateMultiplier(int V5, int unipolar);
+    int PrvCalculateMultiplier(int gain, int unipolar);
 
-    int PrvCalculate_mV(int Ch, int data);
+    int PrvCalculate_mV(int Ch, short data);
+
+    int PrvSetupChannel(int Ch, int enable);
 
     void on_dateTimeEdit_dateTimeChanged(const QDateTime &dateTime);
-
-    void on_checkBox_5V10V_clicked();
 
     void on_samrate_editingFinished();
 
     void on_Setup_currentChanged(int index);
+
+    void on_DeleteCSV_clicked();
+
+    void on_log_Ch_0_clicked();
+
+    void on_log_Ch_1_clicked();
+
+    void on_log_Ch_2_clicked();
+
+    void on_log_Ch_3_clicked();
+
+    void on_log_Ch_4_clicked();
+
+    void on_log_Ch_5_clicked();
+
+    void on_log_Ch_6_clicked();
+
+    void on_log_Ch_7_clicked();
+
 
 private:
     Ui::MainWindow *ui;
@@ -132,14 +155,17 @@ private:
     int                 gErr;
     QString             strBuf;
     int                 fd_ltc185x;
-    int                 status_erase_count;
+    int                 fd_mzio;
+    int                 statusEraseCount;
+    int                 statusCycler;
     int                 minutes;
     char                isSampling;
     Keyboard            *lineEditkeyboard;
     int                 count;
-
     int                 sample_timer_count;     // for reading samples
     BufData             *RdBuf;
+
+
     ChConfigType        ChConfig[ChnMax+1];
 };
 
