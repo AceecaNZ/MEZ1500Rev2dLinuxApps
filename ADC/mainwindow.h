@@ -6,6 +6,8 @@
 #include "keyboard/keyboard.h"
 #include "/opt/MEZ1500Rev2dLinux/Sources/linux-2.6.32.2/drivers/char/MEZ1500_mzio_ltc185x.h"
 
+#define versionString "v1.0"
+
 #define ChMaxReadSamples 51000
 #define sampleSize sizeof(short)
 
@@ -103,6 +105,7 @@ private slots:
 
     void on_select_ch_7_clicked();
 
+    void on_logcheckBox_clicked();
 
     void on_timer_event();
 
@@ -128,25 +131,14 @@ private slots:
 
     void on_samrate_editingFinished();
 
+    void on_periodBox_activated(int index);
+
     void on_Setup_currentChanged(int index);
 
     void on_DeleteCSV_clicked();
 
-    void on_log_Ch_0_clicked();
 
-    void on_log_Ch_1_clicked();
 
-    void on_log_Ch_2_clicked();
-
-    void on_log_Ch_3_clicked();
-
-    void on_log_Ch_4_clicked();
-
-    void on_log_Ch_5_clicked();
-
-    void on_log_Ch_6_clicked();
-
-    void on_log_Ch_7_clicked();
 
 
 private:

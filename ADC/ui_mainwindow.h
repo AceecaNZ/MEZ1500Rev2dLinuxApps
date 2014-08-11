@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Aug 7 22:31:31 2014
+** Created: Mon Aug 11 15:23:06 2014
 **      by: Qt User Interface Compiler version 4.6.3
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -113,10 +113,10 @@ public:
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         status = new QLineEdit(centralWidget);
         status->setObjectName(QString::fromUtf8("status"));
-        status->setGeometry(QRect(10, 10, 221, 23));
+        status->setGeometry(QRect(5, 5, 236, 23));
         TabDisplay = new QTabWidget(centralWidget);
         TabDisplay->setObjectName(QString::fromUtf8("TabDisplay"));
-        TabDisplay->setGeometry(QRect(1, 40, 240, 231));
+        TabDisplay->setGeometry(QRect(1, 30, 240, 241));
         TabDisplay->setTabShape(QTabWidget::Rounded);
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
@@ -330,7 +330,7 @@ public:
         TabDisplay->addTab(tab, QString());
         Start = new QPushButton(centralWidget);
         Start->setObjectName(QString::fromUtf8("Start"));
-        Start->setGeometry(QRect(0, 270, 121, 21));
+        Start->setGeometry(QRect(0, 275, 121, 21));
         QPalette palette;
         QBrush brush(QColor(0, 170, 0, 255));
         brush.setStyle(Qt::SolidPattern);
@@ -355,7 +355,7 @@ public:
         Start->setAutoFillBackground(true);
         Stop = new QPushButton(centralWidget);
         Stop->setObjectName(QString::fromUtf8("Stop"));
-        Stop->setGeometry(QRect(120, 270, 121, 21));
+        Stop->setGeometry(QRect(120, 275, 121, 21));
         QPalette palette1;
         QBrush brush4(QColor(255, 0, 0, 255));
         brush4.setStyle(Qt::SolidPattern);
@@ -372,7 +372,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        TabDisplay->setCurrentIndex(2);
+        TabDisplay->setCurrentIndex(1);
         periodBox_ch_0->setCurrentIndex(3);
         periodBox_ch_1->setCurrentIndex(3);
         periodBox_ch_2->setCurrentIndex(3);

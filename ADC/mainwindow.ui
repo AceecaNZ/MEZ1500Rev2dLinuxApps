@@ -26,9 +26,9 @@
    <widget class="QLineEdit" name="status">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>221</width>
+      <x>5</x>
+      <y>5</y>
+      <width>236</width>
       <height>23</height>
      </rect>
     </property>
@@ -37,16 +37,16 @@
     <property name="geometry">
      <rect>
       <x>1</x>
-      <y>40</y>
+      <y>30</y>
       <width>240</width>
-      <height>231</height>
+      <height>241</height>
      </rect>
     </property>
     <property name="tabShape">
      <enum>QTabWidget::Rounded</enum>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
@@ -1063,7 +1063,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>270</y>
+      <y>275</y>
       <width>121</width>
       <height>21</height>
      </rect>
@@ -1150,7 +1150,7 @@
     <property name="geometry">
      <rect>
       <x>120</x>
-      <y>270</y>
+      <y>275</y>
       <width>121</width>
       <height>21</height>
      </rect>

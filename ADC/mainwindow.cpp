@@ -42,7 +42,6 @@ MainWindow::MainWindow(QWidget *parent) :
         sizeof(long),
         sizeof(long long));
 
-
     // Allocate sampling buffers
     RdBuf = (BufData*)malloc(sizeof(BufData));
     if (!RdBuf)
@@ -104,8 +103,24 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->samrate_ch_6, SIGNAL(editingFinished()), this, SLOT(on_samrate_editingFinished()));
     connect(ui->samrate_ch_7, SIGNAL(editingFinished()), this, SLOT(on_samrate_editingFinished()));
 
-    RESET_STATUS_TIMER;
-    RESET_READ_TIMER;
+
+    connect(ui->periodBox_ch_0, SIGNAL(activated(int)), this, SLOT(on_periodBox_activated(int)));
+    connect(ui->periodBox_ch_1, SIGNAL(activated(int)), this, SLOT(on_periodBox_activated(int)));
+    connect(ui->periodBox_ch_2, SIGNAL(activated(int)), this, SLOT(on_periodBox_activated(int)));
+    connect(ui->periodBox_ch_3, SIGNAL(activated(int)), this, SLOT(on_periodBox_activated(int)));
+    connect(ui->periodBox_ch_4, SIGNAL(activated(int)), this, SLOT(on_periodBox_activated(int)));
+    connect(ui->periodBox_ch_5, SIGNAL(activated(int)), this, SLOT(on_periodBox_activated(int)));
+    connect(ui->periodBox_ch_6, SIGNAL(activated(int)), this, SLOT(on_periodBox_activated(int)));
+    connect(ui->periodBox_ch_7, SIGNAL(activated(int)), this, SLOT(on_periodBox_activated(int)));
+
+    connect(ui->log_Ch_0, SIGNAL(clicked()), this, SLOT(on_logcheckBox_clicked()));
+    connect(ui->log_Ch_1, SIGNAL(clicked()), this, SLOT(on_logcheckBox_clicked()));
+    connect(ui->log_Ch_2, SIGNAL(clicked()), this, SLOT(on_logcheckBox_clicked()));
+    connect(ui->log_Ch_3, SIGNAL(clicked()), this, SLOT(on_logcheckBox_clicked()));
+    connect(ui->log_Ch_4, SIGNAL(clicked()), this, SLOT(on_logcheckBox_clicked()));
+    connect(ui->log_Ch_5, SIGNAL(clicked()), this, SLOT(on_logcheckBox_clicked()));
+    connect(ui->log_Ch_6, SIGNAL(clicked()), this, SLOT(on_logcheckBox_clicked()));
+    connect(ui->log_Ch_7, SIGNAL(clicked()), this, SLOT(on_logcheckBox_clicked()));
 
     // Load prefs
     err = PrvLoadPreferences();
@@ -249,7 +264,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     fflush(stdout);
 
-    MainWindow::on_Start_clicked();
+    MainWindow::on_Stop_clicked();
+
+    ui->status->setText(strBuf.sprintf("ADC Application %s", versionString));
+    RESET_STATUS_TIMER;
+    RESET_READ_TIMER;
 }
 
 MainWindow::~MainWindow()
@@ -915,7 +934,7 @@ void MainWindow::on_select_ch_0_clicked()
                    PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
                    ChCheckBox->isChecked() ? "selected":"deselected");
     ui->status->setText(strBuf);
-    MainWindow::on_Start_clicked();
+    MainWindow::on_Stop_clicked();
     RESET_STATUS_TIMER;
     RESET_STATUS_CYCLER;
 }
@@ -929,7 +948,7 @@ void MainWindow::on_select_ch_1_clicked()
                    PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
                    ChCheckBox->isChecked() ? "selected":"deselected");
     ui->status->setText(strBuf);
-    MainWindow::on_Start_clicked();
+    MainWindow::on_Stop_clicked();
     RESET_STATUS_TIMER;
     RESET_STATUS_CYCLER;
 }
@@ -943,7 +962,7 @@ void MainWindow::on_select_ch_2_clicked()
                    PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
                    ChCheckBox->isChecked() ? "selected":"deselected");
     ui->status->setText(strBuf);
-    MainWindow::on_Start_clicked();
+    MainWindow::on_Stop_clicked();
     RESET_STATUS_TIMER;
     RESET_STATUS_CYCLER;
 
@@ -958,7 +977,7 @@ void MainWindow::on_select_ch_3_clicked()
                    PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
                    ChCheckBox->isChecked() ? "selected":"deselected");
     ui->status->setText(strBuf);
-    MainWindow::on_Start_clicked();
+    MainWindow::on_Stop_clicked();
     RESET_STATUS_TIMER;
     RESET_STATUS_CYCLER;
 
@@ -973,7 +992,7 @@ void MainWindow::on_select_ch_4_clicked()
                    PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
                    ChCheckBox->isChecked() ? "selected":"deselected");
     ui->status->setText(strBuf);
-    MainWindow::on_Start_clicked();
+    MainWindow::on_Stop_clicked();
     RESET_STATUS_TIMER;
     RESET_STATUS_CYCLER;
 
@@ -988,7 +1007,7 @@ void MainWindow::on_select_ch_5_clicked()
                    PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
                    ChCheckBox->isChecked() ? "selected":"deselected");
     ui->status->setText(strBuf);
-    MainWindow::on_Start_clicked();
+    MainWindow::on_Stop_clicked();
     RESET_STATUS_TIMER;
     RESET_STATUS_CYCLER;
 }
@@ -1002,7 +1021,7 @@ void MainWindow::on_select_ch_6_clicked()
                    PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
                    ChCheckBox->isChecked() ? "selected":"deselected");
     ui->status->setText(strBuf);
-    MainWindow::on_Start_clicked();
+    MainWindow::on_Stop_clicked();
     RESET_STATUS_TIMER;
     RESET_STATUS_CYCLER;
 
@@ -1017,123 +1036,37 @@ void MainWindow::on_select_ch_7_clicked()
                    PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
                    ChCheckBox->isChecked() ? "selected":"deselected");
     ui->status->setText(strBuf);
-    MainWindow::on_Start_clicked();
+    MainWindow::on_Stop_clicked();
     RESET_STATUS_TIMER;
     RESET_STATUS_CYCLER;
 }
 
 
-void MainWindow::on_log_Ch_0_clicked()
+void MainWindow::on_logcheckBox_clicked()
 {
     int Ch = Chn0;
+    QString temp;
+    int j;
     QCheckBox *ChCheckBox=(QCheckBox*) sender();
+
+    temp = ChCheckBox->objectName();
+    j = temp.indexOf("Ch", Qt::CaseSensitive);
+    if (j >= 0)
+    {
+        qDebug() << "on_logcheckBox_clicked" << ChCheckBox->objectName() << j << temp.at(j+3);
+    }
 
     ChConfig[Ch].doLog = ChCheckBox->isChecked();
     strBuf.sprintf("Ch%s %s logging",
                    PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
                    ChCheckBox->isChecked() ? "is":"is not");
     ui->status->setText(strBuf);
+    PrvSavePreferences();
     RESET_STATUS_TIMER;
     RESET_STATUS_CYCLER;
 }
 
-void MainWindow::on_log_Ch_1_clicked()
-{
-    int Ch = Chn1;
-    QCheckBox *ChCheckBox=(QCheckBox*) sender();
 
-    ChConfig[Ch].doLog = ChCheckBox->isChecked();
-    strBuf.sprintf("Ch%s %s logging",
-                   PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
-                   ChCheckBox->isChecked() ? "is":"is not");
-    ui->status->setText(strBuf);
-    RESET_STATUS_TIMER;
-    RESET_STATUS_CYCLER;
-}
-
-void MainWindow::on_log_Ch_2_clicked()
-{
-    int Ch = Chn2;
-    QCheckBox *ChCheckBox=(QCheckBox*) sender();
-
-    ChConfig[Ch].doLog = ChCheckBox->isChecked();
-    strBuf.sprintf("Ch%s %s logging",
-                   PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
-                   ChCheckBox->isChecked() ? "is":"is not");
-    ui->status->setText(strBuf);
-    RESET_STATUS_TIMER;
-    RESET_STATUS_CYCLER;
-}
-
-void MainWindow::on_log_Ch_3_clicked()
-{
-    int Ch = Chn3;
-    QCheckBox *ChCheckBox=(QCheckBox*) sender();
-
-    ChConfig[Ch].doLog = ChCheckBox->isChecked();
-    strBuf.sprintf("Ch%s %s logging",
-                   PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
-                   ChCheckBox->isChecked() ? "is":"is not");
-    ui->status->setText(strBuf);
-    RESET_STATUS_TIMER;
-    RESET_STATUS_CYCLER;
-}
-
-void MainWindow::on_log_Ch_4_clicked()
-{
-    int Ch = Chn4;
-    QCheckBox *ChCheckBox=(QCheckBox*) sender();
-
-    ChConfig[Ch].doLog = ChCheckBox->isChecked();
-    strBuf.sprintf("Ch%s %s logging",
-                   PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
-                   ChCheckBox->isChecked() ? "is":"is not");
-    ui->status->setText(strBuf);
-    RESET_STATUS_TIMER;
-    RESET_STATUS_CYCLER;
-}
-
-void MainWindow::on_log_Ch_5_clicked()
-{
-    int Ch = Chn5;
-    QCheckBox *ChCheckBox=(QCheckBox*) sender();
-
-    ChConfig[Ch].doLog = ChCheckBox->isChecked();
-    strBuf.sprintf("Ch%s %s logging",
-                   PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
-                   ChCheckBox->isChecked() ? "is":"is not");
-    ui->status->setText(strBuf);
-    RESET_STATUS_TIMER;
-    RESET_STATUS_CYCLER;
-}
-
-void MainWindow::on_log_Ch_6_clicked()
-{
-    int Ch = Chn6;
-    QCheckBox *ChCheckBox=(QCheckBox*) sender();
-
-    ChConfig[Ch].doLog = ChCheckBox->isChecked();
-    strBuf.sprintf("Ch%s %s logging",
-                   PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
-                   ChCheckBox->isChecked() ? "is":"is not");
-    ui->status->setText(strBuf);
-    RESET_STATUS_TIMER;
-    RESET_STATUS_CYCLER;
-}
-
-void MainWindow::on_log_Ch_7_clicked()
-{
-    int Ch = Chn7;
-    QCheckBox *ChCheckBox=(QCheckBox*) sender();
-
-    ChConfig[Ch].doLog = ChCheckBox->isChecked();
-    strBuf.sprintf("Ch%s %s logging",
-                   PrvGetChStr(Ch, &strBuf)->toStdString().c_str(),
-                   ChCheckBox->isChecked() ? "is":"is not");
-    ui->status->setText(strBuf);
-    RESET_STATUS_TIMER;
-    RESET_STATUS_CYCLER;
-}
 
 
 int MainWindow::PrvGetSamples(int Ch, short* buf, unsigned int *overun)
@@ -1446,8 +1379,25 @@ void MainWindow::on_dateTimeEdit_dateTimeChanged(const QDateTime &dateTime)
 
 void MainWindow::on_samrate_editingFinished()
 {
-    MainWindow::on_Start_clicked();
+    qDebug() << "on_samrate_editingFinished";
+
+    if (isSampling)
+    {
+        MainWindow::on_Stop_clicked();
+    }
+    PrvSavePreferences();
 }
+
+void MainWindow::on_periodBox_activated(int index)
+{
+    qDebug() << "on_periodBox_ch_0_activated" << index;
+    if (isSampling)
+    {
+        MainWindow::on_Stop_clicked();
+    }
+    PrvSavePreferences();
+}
+
 
 void MainWindow::on_Setup_currentChanged(int index)
 {
@@ -1528,6 +1478,8 @@ void MainWindow::on_DeleteCSV_clicked()
             break;
         }
 }
+
+
 
 
 
